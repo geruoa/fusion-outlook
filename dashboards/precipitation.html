@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Precipitation Baselines</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Interactive dashboard: compare California water years against a 30-year normal and a recent window, with regional losses and the climate modes that explain wet months.">
+<meta property="og:title" content="Precipitation Baselines">
+<meta property="og:description" content="Interactive dashboard: compare California water years against a 30-year normal and a recent window, with regional losses and the climate modes that explain wet months.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Schibsted+Grotesk:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
+<link rel="stylesheet" href="../assets/site.css">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+</head>
+<body>
+<header class="topbar"><div class="wrap">
+<a class="brand" href="../index.html"><svg class="brand-mark" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M4.6 4.6l14.8 14.8M19.4 4.6L4.6 19.4M1.5 12h21M12 1.5v21" stroke="currentColor" stroke-width="0.8" opacity=".35"/><path d="M12.2 12.4c1.9-.9 3.4 1.2 2.3 2.9-1.7 2.6-6.1 1.3-6.1-2.2 0-4.2 5.4-6.1 8.8-3.3" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round"/></svg><span>Fusion Outlook</span><small>UC Climate Action</small></a>
+<nav class="nav" aria-label="Site"><a href="../index.html">Overview</a><a href="../papers/precipitation-shift.html">Precipitation shift</a><a href="../papers/mjo-prediction.html">MJO prediction</a><a href="../papers/chill-risk.html">Chill risk</a><a href="../papers/decision-tools.html">Decision tools</a><a href="../dashboards/index.html" aria-current="page">Dashboards</a></nav>
+</div></header>
+<main>
+
+<header class="dash-head"><div class="wrap">
+<p class="eyebrow">Dashboard · Study 1</p>
+<h1>Precipitation baselines</h1>
+<p>How the choice of reference period changes what counts as a dry or normal year in California, and where precipitation has declined. <a href="../papers/precipitation-shift.html">About the study</a></p>
+</div></header>
+<div class="wrap dash-body">
+<div class="kpis">
+<div class="kpi"><span class="k">Area losing &gt;100 mm/yr</span><span class="v">&gt;30%</span><span class="d">Of California, 2002–2021 vs 1982–2001</span></div>
+<div class="kpi"><span class="k">Extreme-wet share</span><span class="v">24% → 17%</span><span class="d">Of annual precipitation from months with z &gt; 1.5</span></div>
+<div class="kpi"><span class="k">Significant drying trend</span><span class="v">17%</span><span class="d">Of state area, water years 1982–2022</span></div>
+<div class="kpi"><span class="k">Explained by climate modes</span><span class="v">R² ≈ 0.25</span><span class="d">Wet anomalies, statewide; Sierra Nevada ≈ 0.19</span></div>
+</div>
+
+<section class="panel" aria-labelledby="p-clim">
+<div class="panel-head"><div><h2 id="p-clim">Which normal should a water year be judged against?</h2><p>Statewide water-year precipitation with two reference periods (line: mean; band: ±1 standard deviation). Pick a year, or click a bar, to see how its rank changes.</p></div></div>
+<div class="controls">
+<span class="muted">Reference A</span><div id="a-seg"></div>
+</div>
+<div class="controls">
+<span class="muted">Reference B <b id="b-label" class="num" style="color:var(--ink)"></b></span>
+<label class="field" for="b-len">Length <input type="range" id="b-len" min="10" max="30" step="1" value="20"><output id="b-len-out" class="num">20</output> yr</label>
+<label class="field" for="b-end">Ending <input type="range" id="b-end" min="1991" max="2022" step="1" value="2021"></label>
+<label class="field" for="target-year">Water year <select id="target-year"></select></label>
+</div>
+<div class="chart" id="clim-chart"></div>
+<div class="readout" id="clim-readout"></div>
+</section>
+
+<div class="panel-grid split">
+<section class="panel" aria-labelledby="p-mov">
+<div class="panel-head"><div><h2 id="p-mov">Moving-window mean and variability</h2><p>Statewide mean and standard deviation in each moving window. Both fall after windows centered in the late 1990s.</p></div><div class="controls"><div id="mwin-seg"></div></div></div>
+<div class="chart" id="moving-chart"></div>
+</section>
+<section class="panel" aria-labelledby="p-reg">
+<div class="panel-head"><div><h2 id="p-reg">Regional change, 2002–2021 vs 1982–2001</h2><p>Bars split the water-year change into wet season (Oct–Mar) and dry season (Apr–Sep); the black tick is the water-year total.</p></div><div class="controls"><div id="region-sort"></div></div></div>
+<div class="chart" id="region-chart"></div>
+<div class="legend"><span><span class="swatch" style="background:var(--s1)"></span>Wet season</span><span><span class="swatch" style="background:var(--s2)"></span>Dry season</span><span><span class="swatch" style="background:var(--ink);width:3px;height:12px"></span>Water year</span></div>
+</section>
+</div>
+
+<section class="panel" aria-labelledby="p-pred">
+<div class="panel-head"><div><h2 id="p-pred">Which climate modes explain wet months</h2><p>Share of grid cells whose best model selected each predictor. Interactions between modes dominate; no single index appears in more than 6% of cells.</p></div>
+<div class="controls"><label class="toggle"><input type="checkbox" id="pred-all"> Show all 36 predictors</label></div></div>
+<div class="panel-grid wide-left">
+<div style="display:grid;gap:8px;min-width:0"><div class="chart" id="pred-chart"></div><div class="legend"><span><span class="swatch" style="background:var(--s1)"></span>Interaction of two modes</span><span><span class="swatch" style="background:var(--s3)"></span>Single mode</span></div></div>
+<div style="display:grid;gap:10px;align-content:start;min-width:0"><div class="chart" id="npred-chart"></div><p class="note">Over 90% of grid-cell models keep three predictors or fewer. Explanatory power is higher in coastal and inland areas (R² ≈ 0.28 in the San Francisco Bay Area) and lowest in the Sierra Nevada, where most of the state's water originates.</p></div>
+</div>
+</section>
+
+<div class="provenance"><b>Data and method</b>
+<span>The statewide series is the latitude-weighted PRISM mean, read from Fig. 3b of Shalgumbayeva, A &amp; Velicogna (2026) to about ±5 mm and checked by reproducing the figure's 5-year running mean. Window statistics, ranks and classes are computed from that series in your browser; percentiles are empirical within each window, and the 20th/80th percentile classes are for illustration. Regional changes are from Fig. 2e (±3 mm) and predictor frequencies from Fig. 5d (±0.1 percentage points). Grid-cell analyses (area fractions, R²) are as reported in the paper.</span></div>
+</div>
+
+</main>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+<script src="../assets/viz.js"></script>
+<script src="../assets/precip.js"></script>
+<footer class="site"><div class="wrap">
+<div class="row"><strong style="color:var(--ink)">Fusion Outlook</strong><span>Observations and AI for California water and agriculture decisions</span></div>
+<div class="row">
+<span>Funded by the University of California Office of the President, California Climate Action Seed Grant R02CP7584</span>
+<span>Lead institution: University of California, Irvine</span>
+</div>
+<div class="row">
+<a href="../index.html#references">References</a>
+<a href="../dashboards/index.html">Dashboards</a>
+<a href="../index.html#data">Data and code</a>
+<span>Figures reproduced from open-access articles under CC BY 4.0, cropped and recompressed for the web.</span>
+</div>
+</div></footer>
+</body>
+</html>

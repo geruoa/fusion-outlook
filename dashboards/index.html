@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Fusion Outlook Dashboards</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Interactive dashboards for MJO forecast skill, California precipitation baselines and orchard chill risk.">
+<meta property="og:title" content="Fusion Outlook Dashboards">
+<meta property="og:description" content="Interactive dashboards for MJO forecast skill, California precipitation baselines and orchard chill risk.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Schibsted+Grotesk:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
+<link rel="stylesheet" href="../assets/site.css">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+</head>
+<body>
+<header class="topbar"><div class="wrap">
+<a class="brand" href="../index.html"><svg class="brand-mark" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M4.6 4.6l14.8 14.8M19.4 4.6L4.6 19.4M1.5 12h21M12 1.5v21" stroke="currentColor" stroke-width="0.8" opacity=".35"/><path d="M12.2 12.4c1.9-.9 3.4 1.2 2.3 2.9-1.7 2.6-6.1 1.3-6.1-2.2 0-4.2 5.4-6.1 8.8-3.3" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round"/></svg><span>Fusion Outlook</span><small>UC Climate Action</small></a>
+<nav class="nav" aria-label="Site"><a href="../index.html">Overview</a><a href="../papers/precipitation-shift.html">Precipitation shift</a><a href="../papers/mjo-prediction.html">MJO prediction</a><a href="../papers/chill-risk.html">Chill risk</a><a href="../papers/decision-tools.html">Decision tools</a><a href="../dashboards/index.html" aria-current="page">Dashboards</a></nav>
+</div></header>
+<main>
+
+<header class="dash-head"><div class="wrap">
+<p class="eyebrow">Interactive</p>
+<h1>Dashboards</h1>
+<p>Three dashboards turn the published results into tools you can explore. Each one lists its data sources and how the numbers were obtained.</p>
+</div></header>
+<section><div class="wrap" style="display:grid;gap:22px">
+<div class="findings three">
+<a class="finding" href="mjo.html" style="text-decoration:none;color:inherit"><p class="eyebrow">Study 2 · Predict</p><p class="figure-num" style="font-size:1.4rem">MJO forecast skill</p><p>Compare correction methods by lead time and MJO strength, test whether history helps, check seasonality, and browse 2,080 FuXi-S2S ensemble forecasts (2002–2021) in phase space.</p><p><span class="btn">Open</span></p></a>
+<a class="finding" href="precipitation.html" style="text-decoration:none;color:inherit"><p class="eyebrow">Study 1 · Diagnose</p><p class="figure-num" style="font-size:1.4rem">Precipitation baselines</p><p>See how a water year ranks against a 30-year normal versus a recent window, follow moving 20-year statistics, and compare regional and seasonal losses and the climate modes selected.</p><p><span class="btn">Open</span></p></a>
+<a class="finding" href="chill.html" style="text-decoration:none;color:inherit"><p class="eyebrow">Study 3 · Impact</p><p class="figure-num" style="font-size:1.4rem">Orchard chill risk</p><p>Set a crop threshold and count shortfall years in observations and projections, separate the effect of variability from the mean trend, and check forecast accuracy by lead.</p><p><span class="btn">Open</span></p></a>
+</div>
+<div class="provenance"><b>About the numbers</b><span>Published curves and series were read from the articles' figures at full resolution and checked against values stated in the text. Exact tables are transcribed as published. Forecast trajectories in the MJO browser come directly from the public FuXi-S2S RMM archive released with Study 2. Where the original data files become available, they replace the digitized values without changes to the dashboards.</span></div>
+</div></section>
+
+</main>
+<footer class="site"><div class="wrap">
+<div class="row"><strong style="color:var(--ink)">Fusion Outlook</strong><span>Observations and AI for California water and agriculture decisions</span></div>
+<div class="row">
+<span>Funded by the University of California Office of the President, California Climate Action Seed Grant R02CP7584</span>
+<span>Lead institution: University of California, Irvine</span>
+</div>
+<div class="row">
+<a href="../index.html#references">References</a>
+<a href="../dashboards/index.html">Dashboards</a>
+<a href="../index.html#data">Data and code</a>
+<span>Figures reproduced from open-access articles under CC BY 4.0, cropped and recompressed for the web.</span>
+</div>
+</div></footer>
+</body>
+</html>

@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>California Precipitation Shift</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Study 1: observed shift in California's precipitation distribution, 1982–2022, and the limited role of climate modes.">
+<meta property="og:title" content="California Precipitation Shift">
+<meta property="og:description" content="Study 1: observed shift in California's precipitation distribution, 1982–2022, and the limited role of climate modes.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Schibsted+Grotesk:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
+<link rel="stylesheet" href="../assets/site.css">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+</head>
+<body>
+<header class="topbar"><div class="wrap">
+<a class="brand" href="../index.html"><svg class="brand-mark" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M4.6 4.6l14.8 14.8M19.4 4.6L4.6 19.4M1.5 12h21M12 1.5v21" stroke="currentColor" stroke-width="0.8" opacity=".35"/><path d="M12.2 12.4c1.9-.9 3.4 1.2 2.3 2.9-1.7 2.6-6.1 1.3-6.1-2.2 0-4.2 5.4-6.1 8.8-3.3" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round"/></svg><span>Fusion Outlook</span><small>UC Climate Action</small></a>
+<nav class="nav" aria-label="Site"><a href="../index.html">Overview</a><a href="../papers/precipitation-shift.html" aria-current="page">Precipitation shift</a><a href="../papers/mjo-prediction.html">MJO prediction</a><a href="../papers/chill-risk.html">Chill risk</a><a href="../papers/decision-tools.html">Decision tools</a><a href="../dashboards/index.html">Dashboards</a></nav>
+</div></header>
+<main>
+<header class="paper-head"><div class="wrap">
+<p class="eyebrow">Study 1 of 4 · Diagnose</p>
+<h1>Recent shift in California's precipitation distribution based on observations</h1>
+<p class="authors">Gulnaz Shalgumbayeva, Geruo A, Isabella Velicogna</p>
+<p class="venue"><i>Environmental Research Communications</i> 8, 041013 (2026) · Open access · <a href="https://doi.org/10.1088/2515-7620/ae5eda">doi.org/10.1088/2515-7620/ae5eda</a></p>
+<div class="actions"><a class="btn solid" href="../dashboards/precipitation.html">Open the dashboard</a><a class="btn" href="https://doi.org/10.1088/2515-7620/ae5eda">Read the article</a><a class="btn" href="https://doi.org/10.1088/2515-7620/ae5eda/data1">Supplementary data</a></div>
+</div></header>
+<section><div class="wrap" style="display:grid;gap:28px">
+<p class="lede">Four decades of daily PRISM observations at 800 m show that California has become drier since the late 1990s, with fewer extreme-wet months and smaller swings from year to year. Large-scale climate modes reproduce where the drying happens, but explain only about a quarter of the year-to-year variation in wet months.</p>
+<div class="findings four"><div class="finding"><p class="figure-num">>30%</p><p>Share of California where mean water-year precipitation fell by more than 100 mm per year, 2002–2021 vs 1982–2001. Losses exceed 400 mm per year in parts of the northern Sierra Nevada.</p></div><div class="finding"><p class="figure-num">24% → 17%</p><p>Contribution of extreme-wet months (z &gt; 1.5, roughly the top 8%) to annual precipitation, 1982–2001 vs 2002–2021.</p></div><div class="finding"><p class="figure-num">17%</p><p>Area with a statistically significant drying trend over 1982–2022. Large year-to-year swings and storms such as water year 2017 hide the underlying decline.</p></div><div class="finding"><p class="figure-num">~25%</p><p>Variance in wet anomalies explained by climate modes and their pairwise interactions, statewide. The Sierra Nevada is lowest (R² ≈ 0.19).</p></div></div>
+</div></section>
+
+<section><div class="wrap two-col">
+<div class="prose">
+<p class="eyebrow">Why it matters</p>
+<h2 style="font-size:1.6rem">What water managers can take from it</h2>
+<ul class="ledger" style="margin-top:6px">
+<li><span class="tag">Baseline</span><div><h4>Shorten the reference period</h4><p>A recent ~20-year climatology fits today's hydroclimate better than a 30-year one. That choice can move drought triggers, reservoir rule curves and allocations.</p></div></li>
+<li><span class="tag">Predictors</span><div><h4>Trust the trend, not the swings</h4><p>Use climate modes for the spatial pattern and direction of drying, not for the size or timing of wet years.</p></div></li>
+<li><span class="tag">Supply</span><div><h4>Plan for fewer big storms</h4><p>Less of the supply now arrives in the extreme-wet months that atmospheric rivers and snowpack deliver. Carryover storage and recharge readiness become more valuable.</p></div></li>
+<li><span class="tag">Outlooks</span><div><h4>Re-verify seasonal outlooks on recent years</h4><p>Both the baseline and the relationships between predictors and precipitation are moving, so skill measured on older periods may not hold.</p></div></li>
+</ul>
+</div>
+<div class="prose">
+<p class="eyebrow">What we did</p>
+<h2 style="font-size:1.6rem">Data and methods</h2>
+<p>We used daily PRISM precipitation for water years 1982–2022 on its native 800 m grid (1138 × 1235 cells), checked against 65 CIMIS stations (mean R² = 0.8) and the NOAA CPC gauge analysis (R² = 0.9). Results are reported by grid cell and for the nine regions of California's Fourth Climate Change Assessment, with the Sierra Nevada split into four subregions.</p>
+<p>Changes in mean and variance were tested with t-tests and F-tests in 20-year moving windows stepped by 5 years. Extreme months were defined from monthly z-scores against 1981–2000: z &gt; 1.5 for wet and z &lt; −1 for dry, each about 8% of months.</p>
+<p>To test climate modes, each grid cell's wet anomalies were regressed on eight indices (East- and Central-Pacific ENSO, PDO, PNA, AO, PMM, MJO amplitude and phase) and their 28 pairwise interactions. Forward selection kept a predictor only if it was significant and also lowered AICc, raised adjusted R², and improved leave-one-out cross-validated R².</p>
+</div>
+</div></section>
+
+<section><div class="wrap" style="display:grid;gap:36px">
+<div class="sec-head" style="margin-bottom:0"><p class="eyebrow">Figures</p><h2>Key results</h2></div>
+<figure class="fig "><div class="frame"><img src="../assets/img/precip-fig1.webp" alt="<b>Figure 1" loading="lazy"></div>
+<figcaption><b>Figure 1.</b> Change in water-year mean (a) and interannual standard deviation (b) between 2002–2021 and 1982–2001. Crosses mark 10 × 10 blocks where most cells are significant at α = 0.05. Panels i–xii show the distribution of grid-cell mean precipitation in each region for successive 20-year windows; the curves shift toward drier values over time. <span class="credit">Shalgumbayeva et al. 2026, Fig. 1, CC BY 4.0</span></figcaption></figure>
+<div class="fig-grid split">
+<figure class="fig "><div class="frame"><img src="../assets/img/precip-fig3.webp" alt="<b>Figure 3" loading="lazy"></div>
+<figcaption><b>Figure 3.</b> (a) Trend in water-year precipitation, 1982–2022; crosses mark significant cells. (b) Statewide latitude-weighted mean with the 5-year moving mean ± standard error. The decline that starts around 1997 is partly masked by wet years such as 2017. <span class="credit">Shalgumbayeva et al. 2026, Fig. 3, CC BY 4.0</span></figcaption></figure>
+<figure class="fig "><div class="frame"><img src="../assets/img/precip-fig6.webp" alt="<b>Figure 6" loading="lazy"></div>
+<figcaption><b>Figure 6.</b> Trend in water-year totals of wet anomalies: observed (left), reconstructed from the selected climate-mode models (middle), and the residual (right). The modeled trend reproduces the observed pattern, with the largest declines in northern California. <span class="credit">Shalgumbayeva et al. 2026, Fig. 6, CC BY 4.0</span></figcaption></figure>
+</div>
+<figure class="fig "><div class="frame"><img src="../assets/img/precip-fig4.webp" alt="<b>Figure 4" loading="lazy"></div>
+<figcaption><b>Figure 4.</b> (a) Change in the contribution of extreme-wet months to water-year totals (percentage points). (b) That contribution through time by region, using 20-year windows. Panels i–xii compare the number of extreme-wet months per grid cell in 1982–2001 (black) and 2002–2021 (red). <span class="credit">Shalgumbayeva et al. 2026, Fig. 4, CC BY 4.0</span></figcaption></figure>
+<figure class="fig "><div class="frame"><img src="../assets/img/precip-fig5.webp" alt="<b>Figure 5" loading="lazy"></div>
+<figcaption><b>Figure 5.</b> Regression models fitted at each grid cell. (a) Coefficient of determination R². (b) Its distribution, with a statewide mean of 0.25. (c) Number of predictors kept; over 90% of models use fewer than four. (d) How often each index or interaction is selected; interactions such as PNA × PDO and PDO × AO lead. <span class="credit">Shalgumbayeva et al. 2026, Fig. 5, CC BY 4.0</span></figcaption></figure>
+</div></section>
+
+<section><div class="wrap two-col">
+<div class="prose">
+<p class="eyebrow">Limits of the analysis</p>
+<h2 style="font-size:1.4rem">What this study does not settle</h2>
+<ul>
+<li>The trends are weak and significant over a small part of the state. A shorter window can show strong drying (1997–2016) or almost none (2002–2021, which includes water year 2017).</li>
+<li>The recent decline in variability runs against the longer-term rise in wet and dry extremes since the 1960s and against model projections of more variability. Whether it is temporary is open.</li>
+<li>The regression explains the wet tail only. Separating natural variability from human influence needs a longer record or a dedicated attribution study.</li>
+</ul>
+</div>
+<div class="prose">
+<p class="eyebrow">Where this leads</p>
+<h2 style="font-size:1.4rem">From diagnosis to prediction</h2>
+<p>If the climate modes behind seasonal outlooks explain only a quarter of the wet-month variance, the practical question becomes which sources of skill do work at the 2–6 week range that reservoir and allocation decisions need. The Madden–Julian Oscillation is the leading candidate, and it is the subject of Study 2.</p>
+<h3>Cite</h3>
+<p class="cite">Shalgumbayeva, G., A, G. &amp; Velicogna, I. (2026). Recent shift in California's precipitation distribution based on observations. Environmental Research Communications, 8, 041013. https://doi.org/10.1088/2515-7620/ae5eda</p>
+</div>
+</div></section>
+<section><div class="wrap"><nav class="pager" aria-label="Study sequence"><span></span><a class="next" href="../papers/mjo-prediction.html"><span class="eyebrow">Next · Study 2</span><strong>Deep learning MJO prediction</strong></a></nav></div></section>
+
+</main>
+<footer class="site"><div class="wrap">
+<div class="row"><strong style="color:var(--ink)">Fusion Outlook</strong><span>Observations and AI for California water and agriculture decisions</span></div>
+<div class="row">
+<span>Funded by the University of California Office of the President, California Climate Action Seed Grant R02CP7584</span>
+<span>Lead institution: University of California, Irvine</span>
+</div>
+<div class="row">
+<a href="../index.html#references">References</a>
+<a href="../dashboards/index.html">Dashboards</a>
+<a href="../index.html#data">Data and code</a>
+<span>Figures reproduced from open-access articles under CC BY 4.0, cropped and recompressed for the web.</span>
+</div>
+</div></footer>
+</body>
+</html>

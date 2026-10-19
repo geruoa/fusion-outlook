@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>MJO Forecast Skill</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Interactive MJO forecast skill dashboard: correction methods, history test, seasonality and a browser for 2,080 FuXi-S2S ensemble forecasts.">
+<meta property="og:title" content="MJO Forecast Skill">
+<meta property="og:description" content="Interactive MJO forecast skill dashboard: correction methods, history test, seasonality and a browser for 2,080 FuXi-S2S ensemble forecasts.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Schibsted+Grotesk:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
+<link rel="stylesheet" href="../assets/site.css">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+</head>
+<body>
+<header class="topbar"><div class="wrap">
+<a class="brand" href="../index.html"><svg class="brand-mark" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M4.6 4.6l14.8 14.8M19.4 4.6L4.6 19.4M1.5 12h21M12 1.5v21" stroke="currentColor" stroke-width="0.8" opacity=".35"/><path d="M12.2 12.4c1.9-.9 3.4 1.2 2.3 2.9-1.7 2.6-6.1 1.3-6.1-2.2 0-4.2 5.4-6.1 8.8-3.3" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round"/></svg><span>Fusion Outlook</span><small>UC Climate Action</small></a>
+<nav class="nav" aria-label="Site"><a href="../index.html">Overview</a><a href="../papers/precipitation-shift.html">Precipitation shift</a><a href="../papers/mjo-prediction.html">MJO prediction</a><a href="../papers/chill-risk.html">Chill risk</a><a href="../papers/decision-tools.html">Decision tools</a><a href="../dashboards/index.html" aria-current="page">Dashboards</a></nav>
+</div></header>
+<main>
+
+<header class="dash-head"><div class="wrap">
+<p class="eyebrow">Dashboard · Study 2</p>
+<h1>MJO forecast skill</h1>
+<p>How well the FuXi-S2S AI foundation model, with and without bias correction, predicts the Madden–Julian Oscillation 1 to 42 days ahead. Test period 2019–2021 unless stated. <a href="../papers/mjo-prediction.html">About the study</a></p>
+</div></header>
+<div class="wrap dash-body">
+<div class="kpis">
+<div class="kpi"><span class="k">Skillful horizon</span><span class="v">37 → 40 <small>days</small></span><span class="d">FuXi-S2S alone vs with LSTM correction (BCOR ≥ 0.5)</span></div>
+<div class="kpi"><span class="k">Error, weeks 5–6</span><span class="v">−11%</span><span class="d">LSTM vs uncorrected, all forecasts; −19% for strong MJO</span></div>
+<div class="kpi"><span class="k">Strong-MJO forecasts</span><span class="v">≥ 42 <small>days</small></span><span class="d">Skillful through the full horizon when amplitude ≥ 1; weak: ~24 days</span></div>
+<div class="kpi"><span class="k">MJO history alone</span><span class="v">9–12 <small>days</small></span><span class="d">Up to 720 days of lookback adds no skill</span></div>
+</div>
+
+<section class="panel" aria-labelledby="p-skill">
+<div class="panel-head"><div><h2 id="p-skill">Skill by lead time</h2><p>Faded segments are not significantly different from the uncorrected forecast (95% bootstrap). The BoM view verifies against Bureau of Meteorology indices, where data mismatch makes correction look larger.</p></div>
+<div class="controls"><div id="metric-seg"></div><div id="subset-seg"></div></div></div>
+<div class="controls legend" id="method-toggles"></div>
+<div class="panel-grid wide-left">
+<div class="chart" id="skill-chart"></div>
+<div class="readout" id="skill-readout"></div>
+</div>
+</section>
+
+<div class="panel-grid split">
+<section class="panel" aria-labelledby="p-lb">
+<div class="panel-head"><div><h2 id="p-lb">Does MJO history help?</h2><p>Skillful days for two time-series models given 0 to 720 days of past MJO indices. Open circles: history only. Filled: history plus the FuXi-S2S forecast. Triangles: skillful through all 42 days.</p></div></div>
+<div class="chart" id="lookback-chart"></div>
+<div class="legend"><span><span class="swatch" style="background:var(--s1)"></span>Temporal Fusion Transformer</span><span><span class="swatch" style="background:var(--s2)"></span>TSMixer</span><span><span class="swatch dash"></span>FuXi-S2S alone</span></div>
+</section>
+<section class="panel" aria-labelledby="p-bias">
+<div class="panel-head"><div><h2 id="p-bias">Amplitude and phase bias</h2><p>FuXi-S2S forecasts a weaker MJO as lead grows and, after week 3, moves it east too fast (negative phase bias). Corrections reduce the phase error by weakening amplitude further.</p></div><div class="controls"><div id="bias-seg"></div></div></div>
+<div class="chart" id="bias-chart"></div>
+<div class="legend"><span><span class="swatch dash"></span>FuXi-S2S</span><span><span class="swatch" style="background:var(--s3)"></span>Mean bias</span><span><span class="swatch" style="background:var(--s2)"></span>MVLR</span><span><span class="swatch" style="background:var(--s1)"></span>LSTM</span></div>
+</section>
+</div>
+
+<section class="panel" aria-labelledby="p-season">
+<div class="panel-head"><div><h2 id="p-season">Skill by start month</h2><p>FuXi-S2S bivariate correlation by initialization month and lead (training period 2002–2017, in bands of 0.1). Orange marks where correlation drops below 0.5; months without a mark stay skillful through 42 days.</p></div></div>
+<div class="chart" id="season-chart"></div>
+<div class="legend" id="season-legend"></div>
+</section>
+
+<section class="panel" aria-labelledby="p-exp">
+<div class="panel-head"><div><h2 id="p-exp">Forecast browser</h2><p>Any of the 2,080 FuXi-S2S ensemble forecasts in the public archive (51 members, 42 days). The thick line is the ensemble mean; dots mark every 5 days. Observed indices are not part of the archive and are not shown.</p></div>
+<div class="controls">
+<label class="field" for="init-year">Year <select id="init-year"></select></label>
+<label class="field" for="init-date">Start <select id="init-date"></select></label>
+<label class="toggle"><input type="checkbox" id="show-members" checked> Show members</label>
+</div></div>
+<div class="controls"><span class="muted">February 2017 case study:</span>
+<button class="btn" type="button" data-preset="2017-01-17">17 Jan</button>
+<button class="btn" type="button" data-preset="2017-01-24">24 Jan</button>
+<button class="btn" type="button" data-preset="2017-01-31">31 Jan</button>
+<button class="btn" type="button" data-preset="2017-02-07">7 Feb</button></div>
+<div class="panel-grid split">
+<div class="chart" id="phase-chart" style="max-width:520px;justify-self:center;width:100%"></div>
+<div style="display:grid;gap:14px;align-content:start;min-width:0">
+<div class="chart" id="amp-chart"></div>
+<div class="legend"><span><span class="swatch" style="background:var(--s1)"></span>Ensemble-mean amplitude</span><span><span class="swatch" style="background:repeating-linear-gradient(90deg,var(--s1) 0 2px,transparent 2px 5px)"></span>Member median</span><span><span class="swatch" style="height:10px;background:var(--s1);opacity:.25"></span>Members, 10–90%</span></div>
+<div class="readout" id="explorer-readout"></div>
+</div>
+</div>
+</section>
+
+<section class="panel" aria-labelledby="p-damp">
+<div class="panel-head"><div><h2 id="p-damp">Why the ensemble mean weakens</h2><p>Computed here from the full archive. Individual members keep their MJO amplitude, but as they drift apart in phase their average shrinks. Much of the ensemble-mean amplitude loss is spread, not a weaker MJO in each member.</p></div></div>
+<div class="chart" id="damp-chart"></div>
+<div class="legend" id="damp-legend"></div>
+</section>
+
+<div class="provenance"><b>Data and method</b>
+<span>Skill, bias and seasonality values were digitized from Figs. 1–6 and 8 of Virji, A &amp; Velicogna (2026) at one-day lead resolution (about ±0.005 in correlation, ±0.01 in error) and checked against the paper: they reproduce the reported 37 → 40 day horizons and error reductions (3%/9% MVLR, 4%/11% LSTM, 5%/16% and 7%/19% for strong MJO, 38%/17%/12% vs BoM) to within one percentage point. Seasonality cells are binned to 0.1 as in the published figure. Forecast trajectories and the amplitude diagnostic use the FuXi-S2S RMM indices published at <a href="https://github.com/khalilv/mjo-predict">github.com/khalilv/mjo-predict</a>.</span></div>
+</div>
+
+</main>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+<script src="../assets/viz.js"></script>
+<script src="../assets/mjo.js"></script>
+<footer class="site"><div class="wrap">
+<div class="row"><strong style="color:var(--ink)">Fusion Outlook</strong><span>Observations and AI for California water and agriculture decisions</span></div>
+<div class="row">
+<span>Funded by the University of California Office of the President, California Climate Action Seed Grant R02CP7584</span>
+<span>Lead institution: University of California, Irvine</span>
+</div>
+<div class="row">
+<a href="../index.html#references">References</a>
+<a href="../dashboards/index.html">Dashboards</a>
+<a href="../index.html#data">Data and code</a>
+<span>Figures reproduced from open-access articles under CC BY 4.0, cropped and recompressed for the web.</span>
+</div>
+</div></footer>
+</body>
+</html>

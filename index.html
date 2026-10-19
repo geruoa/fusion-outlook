@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Fusion Outlook</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Observations and AI for subseasonal-to-seasonal water and agriculture decisions in California: four UC Climate Action studies and interactive dashboards.">
+<meta property="og:title" content="Fusion Outlook">
+<meta property="og:description" content="Observations and AI for subseasonal-to-seasonal water and agriculture decisions in California: four UC Climate Action studies and interactive dashboards.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Schibsted+Grotesk:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
+<link rel="stylesheet" href="assets/site.css">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+</head>
+<body>
+<header class="topbar"><div class="wrap">
+<a class="brand" href="index.html"><svg class="brand-mark" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M4.6 4.6l14.8 14.8M19.4 4.6L4.6 19.4M1.5 12h21M12 1.5v21" stroke="currentColor" stroke-width="0.8" opacity=".35"/><path d="M12.2 12.4c1.9-.9 3.4 1.2 2.3 2.9-1.7 2.6-6.1 1.3-6.1-2.2 0-4.2 5.4-6.1 8.8-3.3" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round"/></svg><span>Fusion Outlook</span><small>UC Climate Action</small></a>
+<nav class="nav" aria-label="Site"><a href="index.html" aria-current="page">Overview</a><a href="papers/precipitation-shift.html">Precipitation shift</a><a href="papers/mjo-prediction.html">MJO prediction</a><a href="papers/chill-risk.html">Chill risk</a><a href="papers/decision-tools.html">Decision tools</a><a href="dashboards/index.html">Dashboards</a></nav>
+</div></header>
+<main>
+
+<section class="hero"><div class="wrap hero-grid">
+<div>
+<p class="eyebrow"><b>UC California Climate Action</b> · Seed Grant R02CP7584</p>
+<h1>Seeing California's water and crop risks <em>weeks to seasons ahead</em></h1>
+<p class="lede">We combine long observational records with AI weather models to answer three practical questions for California's water and agriculture sectors: what has already changed, what can be predicted 2 to 6 weeks out, and how those outlooks reach the people who make decisions.</p>
+<div class="hero-meta">
+<span><b>Lead</b> UC Irvine, Earth System Science</span>
+<span><b>Partners</b> UC Agriculture and Natural Resources · UC Davis · UC Merced · NASA JPL</span>
+<span><b>Output</b> 4 peer-reviewed studies · 3 dashboards</span>
+</div>
+<div class="hero-meta" style="margin-top:22px"><a class="btn solid" href="dashboards/index.html">Open the dashboards</a><a class="btn" href="#studies">Read the four studies</a></div>
+</div>
+<figure class="strip-card">
+<h3>Statewide precipitation has stepped down since the late 1990s</h3>
+<p class="sub">California water-year precipitation, 1982–2022 (PRISM observations). The 2002–2021 mean is 13% below 1982–2001.</p>
+<svg viewBox="0 0 640 250" role="img" aria-labelledby="strip-t strip-d" style="width:100%;height:auto;display:block">
+<title id="strip-t">California water-year precipitation, 1982–2022</title>
+<desc id="strip-d">Statewide mean precipitation averaged 627 mm in water years 1982–2001 and 545 mm in 2002–2021.</desc>
+<line x1="44" x2="630" y1="179.6" y2="179.6" style="stroke:var(--grid)"/>
+<text x="38" y="183.6" text-anchor="end" style="font:12px var(--ui);fill:var(--ink-3)">250</text>
+<line x1="44" x2="630" y1="139.1" y2="139.1" style="stroke:var(--grid)"/>
+<text x="38" y="143.1" text-anchor="end" style="font:12px var(--ui);fill:var(--ink-3)">500</text>
+<line x1="44" x2="630" y1="98.7" y2="98.7" style="stroke:var(--grid)"/>
+<text x="38" y="102.7" text-anchor="end" style="font:12px var(--ui);fill:var(--ink-3)">750</text>
+<line x1="44" x2="630" y1="58.3" y2="58.3" style="stroke:var(--grid)"/>
+<text x="38" y="62.3" text-anchor="end" style="font:12px var(--ui);fill:var(--ink-3)">1000</text>
+<rect x="46.0" y="79.3" width="10.3" height="140.7" rx="1.5" style="fill:var(--neutral-mark);opacity:0.45"><title>WY 1982: 870 mm</title></rect>
+<rect x="60.3" y="46.9" width="10.3" height="173.1" rx="1.5" style="fill:var(--neutral-mark);opacity:0.45"><title>WY 1983: 1070 mm</title></rect>
+<rect x="74.6" y="121.7" width="10.3" height="98.3" rx="1.5" style="fill:var(--neutral-mark);opacity:0.45"><title>WY 1984: 608 mm</title></rect>
+<rect x="88.9" y="141.4" width="10.3" height="78.6" rx="1.5" style="fill:var(--neutral-mark);opacity:0.45"><title>WY 1985: 486 mm</title></rect>
+<rect x="103.2" y="96.9" width="10.3" height="123.1" rx="1.5" style="fill:var(--neutral-mark);opacity:0.45"><title>WY 1986: 761 mm</title></rect>
+<rect x="117.5" y="159.5" width="10.3" height="60.5" rx="1.5" style="fill:var(--neutral-mark);opacity:0.45"><title>WY 1987: 374 mm</title></rect>
+<rect x="131.8" y="142.7" width="10.3" height="77.3" rx="1.5" style="fill:var(--neutral-mark);opacity:0.45"><title>WY 1988: 478 mm</title></rect>
+<rect x="146.0" y="137.7" width="10.3" height="82.3" rx="1.5" style="fill:var(--neutral-mark);opacity:0.45"><title>WY 1989: 509 mm</title></rect>
+<rect x="160.3" y="154.0" width="10.3" height="66.0" rx="1.5" style="fill:var(--neutral-mark);opacity:0.45"><title>WY 1990: 408 mm</title></rect>
+<rect x="174.6" y="149.0" width="10.3" height="71.0" rx="1.5" style="fill:var(--neutral-mark);opacity:0.45"><title>WY 1991: 439 mm</title></rect>
+<rect x="188.9" y="140.6" width="10.3" height="79.4" rx="1.5" style="fill:var(--neutral-mark);opacity:0.45"><title>WY 1992: 491 mm</title></rect>
+<rect x="203.2" y="88.0" width="10.3" height="132.0" rx="1.5" style="fill:var(--neutral-mark);opacity:0.45"><title>WY 1993: 816 mm</title></rect>
+<rect x="217.5" y="155.8" width="10.3" height="64.2" rx="1.5" style="fill:var(--neutral-mark);opacity:0.45"><title>WY 1994: 397 mm</title></rect>
+<rect x="231.8" y="68.0" width="10.3" height="152.0" rx="1.5" style="fill:var(--neutral-mark);opacity:0.45"><title>WY 1995: 940 mm</title></rect>
+<rect x="246.1" y="114.2" width="10.3" height="105.8" rx="1.5" style="fill:var(--neutral-mark);opacity:0.45"><title>WY 1996: 654 mm</title></rect>
+<rect x="260.4" y="104.5" width="10.3" height="115.5" rx="1.5" style="fill:var(--neutral-mark);opacity:0.45"><title>WY 1997: 714 mm</title></rect>
+<rect x="274.7" y="63.0" width="10.3" height="157.0" rx="1.5" style="fill:var(--neutral-mark);opacity:0.45"><title>WY 1998: 971 mm</title></rect>
+<rect x="289.0" y="129.7" width="10.3" height="90.3" rx="1.5" style="fill:var(--neutral-mark);opacity:0.45"><title>WY 1999: 558 mm</title></rect>
+<rect x="303.3" y="129.7" width="10.3" height="90.3" rx="1.5" style="fill:var(--neutral-mark);opacity:0.45"><title>WY 2000: 558 mm</title></rect>
+<rect x="317.6" y="149.5" width="10.3" height="70.5" rx="1.5" style="fill:var(--neutral-mark);opacity:0.45"><title>WY 2001: 436 mm</title></rect>
+<rect x="331.9" y="144.8" width="10.3" height="75.2" rx="1.5" style="fill:var(--accent);opacity:0.85"><title>WY 2002: 465 mm</title></rect>
+<rect x="346.1" y="116.2" width="10.3" height="103.8" rx="1.5" style="fill:var(--accent);opacity:0.85"><title>WY 2003: 642 mm</title></rect>
+<rect x="360.4" y="139.3" width="10.3" height="80.7" rx="1.5" style="fill:var(--accent);opacity:0.85"><title>WY 2004: 499 mm</title></rect>
+<rect x="374.7" y="94.8" width="10.3" height="125.2" rx="1.5" style="fill:var(--accent);opacity:0.85"><title>WY 2005: 774 mm</title></rect>
+<rect x="389.0" y="96.9" width="10.3" height="123.1" rx="1.5" style="fill:var(--accent);opacity:0.85"><title>WY 2006: 761 mm</title></rect>
+<rect x="403.3" y="159.0" width="10.3" height="61.0" rx="1.5" style="fill:var(--accent);opacity:0.85"><title>WY 2007: 377 mm</title></rect>
+<rect x="417.6" y="146.4" width="10.3" height="73.6" rx="1.5" style="fill:var(--accent);opacity:0.85"><title>WY 2008: 455 mm</title></rect>
+<rect x="431.9" y="144.8" width="10.3" height="75.2" rx="1.5" style="fill:var(--accent);opacity:0.85"><title>WY 2009: 465 mm</title></rect>
+<rect x="446.2" y="118.3" width="10.3" height="101.7" rx="1.5" style="fill:var(--accent);opacity:0.85"><title>WY 2010: 629 mm</title></rect>
+<rect x="460.5" y="94.0" width="10.3" height="126.0" rx="1.5" style="fill:var(--accent);opacity:0.85"><title>WY 2011: 779 mm</title></rect>
+<rect x="474.8" y="148.2" width="10.3" height="71.8" rx="1.5" style="fill:var(--accent);opacity:0.85"><title>WY 2012: 444 mm</title></rect>
+<rect x="489.1" y="146.4" width="10.3" height="73.6" rx="1.5" style="fill:var(--accent);opacity:0.85"><title>WY 2013: 455 mm</title></rect>
+<rect x="503.4" y="167.4" width="10.3" height="52.6" rx="1.5" style="fill:var(--accent);opacity:0.85"><title>WY 2014: 325 mm</title></rect>
+<rect x="517.7" y="150.3" width="10.3" height="69.7" rx="1.5" style="fill:var(--accent);opacity:0.85"><title>WY 2015: 431 mm</title></rect>
+<rect x="532.0" y="123.6" width="10.3" height="96.4" rx="1.5" style="fill:var(--accent);opacity:0.85"><title>WY 2016: 596 mm</title></rect>
+<rect x="546.2" y="70.1" width="10.3" height="149.9" rx="1.5" style="fill:var(--accent);opacity:0.85"><title>WY 2017: 927 mm</title></rect>
+<rect x="560.5" y="151.6" width="10.3" height="68.4" rx="1.5" style="fill:var(--accent);opacity:0.85"><title>WY 2018: 423 mm</title></rect>
+<rect x="574.8" y="99.5" width="10.3" height="120.5" rx="1.5" style="fill:var(--accent);opacity:0.85"><title>WY 2019: 745 mm</title></rect>
+<rect x="589.1" y="153.8" width="10.3" height="66.2" rx="1.5" style="fill:var(--accent);opacity:0.85"><title>WY 2020: 409 mm</title></rect>
+<rect x="603.4" y="172.1" width="10.3" height="47.9" rx="1.5" style="fill:var(--accent);opacity:0.85"><title>WY 2021: 296 mm</title></rect>
+<rect x="617.7" y="148.2" width="10.3" height="71.8" rx="1.5" style="fill:var(--neutral-mark);opacity:0.45"><title>WY 2022: 444 mm</title></rect>
+<line x1="44.0" x2="329.9" y1="118.6" y2="118.6" style="stroke:var(--ink);stroke-width:2.5"/>
+<line x1="329.9" x2="615.7" y1="131.9" y2="131.9" style="stroke:var(--ochre);stroke-width:2.5"/>
+<line x1="44" x2="66" y1="12" y2="12" style="stroke:var(--ink);stroke-width:2.5"/>
+<text x="72" y="16" style="font:600 13px var(--ui);fill:var(--ink)">1982–2001 mean 627 mm</text>
+<line x1="280" x2="302" y1="12" y2="12" style="stroke:var(--ochre);stroke-width:2.5"/>
+<text x="308" y="16" style="font:600 13px var(--ui);fill:var(--ochre)">2002–2021 mean 545 mm</text>
+<text x="51.1" y="238" text-anchor="middle" style="font:12px var(--ui);fill:var(--ink-3)">1982</text>
+<text x="194.1" y="238" text-anchor="middle" style="font:12px var(--ui);fill:var(--ink-3)">1992</text>
+<text x="337.0" y="238" text-anchor="middle" style="font:12px var(--ui);fill:var(--ink-3)">2002</text>
+<text x="479.9" y="238" text-anchor="middle" style="font:12px var(--ui);fill:var(--ink-3)">2012</text>
+<text x="622.9" y="238" text-anchor="middle" style="font:12px var(--ui);fill:var(--ink-3)">2022</text>
+</svg>
+<p class="note" style="margin-top:6px">Values read from Fig. 3b of Shalgumbayeva et al. (2026) [1]. <a href="papers/precipitation-shift.html">About this study</a></p>
+</figure>
+</div></section>
+
+<section id="studies"><div class="wrap">
+<div class="sec-head">
+<p class="eyebrow">How the work fits together</p>
+<h2>One line of work, from diagnosis to decision</h2>
+<p class="lede">Each study answers the question the previous one raises. The first shows that California's precipitation regime has shifted. The second asks how far ahead the main source of 2–6 week predictability can be forecast. The third shows what variability means for orchard crops and tests an in-season forecast. The fourth asks what makes growers and advisors use tools like these.</p>
+</div>
+<div class="chain">
+<article class="study">
+<p class="step"><i>1</i>Diagnose</p>
+<h3><a href="papers/precipitation-shift.html">Recent shift in California's precipitation distribution</a></h3>
+<p class="q">Has the distribution of precipitation shifted, and do climate modes explain it?</p>
+<div><p class="figure-num">24% → 17%</p><p class="stat-label">Share of annual precipitation from extreme-wet months, 1982–2001 vs 2002–2021</p></div>
+<p class="links"><a href="papers/precipitation-shift.html">Summary</a><a href="dashboards/precipitation.html">Dashboard</a></p>
+</article>
+<article class="study">
+<p class="step"><i>2</i>Predict</p>
+<h3><a href="papers/mjo-prediction.html">Deep learning MJO prediction: history and bias correction</a></h3>
+<p class="q">How far ahead can AI forecast the Madden–Julian Oscillation, and what actually improves it?</p>
+<div><p class="figure-num">40 <small>days</small></p><p class="stat-label">Skillful MJO lead time with the corrected AI foundation model, up from 37</p></div>
+<p class="links"><a href="papers/mjo-prediction.html">Summary</a><a href="dashboards/mjo.html">Dashboard</a></p>
+</article>
+<article class="study">
+<p class="step"><i>3</i>Impact</p>
+<h3><a href="papers/chill-risk.html">From intermittent to persistent chill insufficiency</a></h3>
+<p class="q">When does warming plus variability push orchard winter chill below crop needs?</p>
+<div><p class="figure-num">~30%</p><p class="stat-label">Of the past 20 winters had too little chill for pistachio in regions south of 37°N</p></div>
+<p class="links"><a href="papers/chill-risk.html">Summary</a><a href="dashboards/chill.html">Dashboard</a></p>
+</article>
+<article class="study">
+<p class="step"><i>4</i>Use</p>
+<h3><a href="papers/decision-tools.html">Climate tools without climate consensus</a></h3>
+<p class="q">Does belief in climate change decide whether farmers and ranchers use decision tools?</p>
+<div><p class="figure-num">p = 0.42</p><p class="stat-label">No link between climate concern and tool use among 383 producers</p></div>
+<p class="links"><a href="papers/decision-tools.html">Summary</a></p>
+</article>
+</div>
+</div></section>
+
+<section><div class="wrap two-col">
+<div>
+<div class="sec-head"><p class="eyebrow">For water and agriculture agencies</p><h2>What the results mean for planning now</h2></div>
+<ul class="ledger">
+<li><span class="tag">Baselines</span><div><h4>Use a recent ~20-year climatology</h4><p>Mean precipitation and its variability have both declined since the late 1990s. A recent 20-year baseline describes today's hydroclimate better than a fixed 30-year normal, which can move drought triggers, rule curves and allocations. <a href="dashboards/precipitation.html">Compare baselines</a></p></div></li>
+<li><span class="tag">Storms</span><div><h4>Plan for fewer large storms</h4><p>Extreme-wet months now supply less of the annual total. That raises the value of carryover storage and readiness to capture recharge when big storms do arrive.</p></div></li>
+<li><span class="tag">Climate modes</span><div><h4>Use ENSO, PDO and similar indices for direction, not for wet-year size</h4><p>Climate modes and their interactions reproduce where drying occurs but explain only about 25% of year-to-year swings in wet months.</p></div></li>
+<li><span class="tag">Weeks 3–6</span><div><h4>Use MJO outlooks when the signal is strong</h4><p>AI-based MJO forecasts stay skillful through 42 days when they start from a strong MJO, and the 2017 case study tracked the February event 3–4 weeks ahead. <a href="dashboards/mjo.html">Check a forecast</a></p></div></li>
+<li><span class="tag">Orchards</span><div><h4>Decide on dormancy treatments with an end-of-January chill check</h4><p>Observed chill through January plus a 1-month ECMWF forecast for February lands within 10% of the season total in 41–42 of 43 years. <a href="dashboards/chill.html">See the risk</a></p></div></li>
+</ul>
+</div>
+<div>
+<div class="sec-head"><p class="eyebrow">For funders and program officers</p><h2>Why this is worth investing in</h2></div>
+<ul class="ledger">
+<li><span class="tag">New benchmark</span><div><h4>State-of-the-art MJO skill from an AI foundation model</h4><p>A lightweight correction model extends skillful MJO prediction from 37 to 40 days, compared with about 30 days for operational systems such as ECMWF. AI models also run orders of magnitude faster than physics models once trained.</p></div></li>
+<li><span class="tag">Better methods</span><div><h4>Clear guidance on where gains come from</h4><p>Longer MJO history does not add skill, and much of the improvement credited to bias correction in earlier work reflects dataset mismatch. Effort is better spent on the initial atmospheric state and new training objectives.</p></div></li>
+<li><span class="tag">Near-term risk</span><div><h4>Ag impacts are arriving earlier than projections say</h4><p>Rising variability already produces chill shortfalls that CMIP6 models, with about half the observed variability, mostly miss. Mid-century timelines understate the urgency for breeding and orchard planning.</p></div></li>
+<li><span class="tag">Adoption</span><div><h4>Tools are adopted for usefulness, not belief</h4><p>Belief in climate change does not predict tool use. Tools that fit existing decisions and reach growers through advisors can serve users across political views.</p></div></li>
+<li><span class="tag">Next steps</span><div><h4>Ready to extend</h4><p>Open questions the team is positioned to pursue: how often MJO forecasts produce false alarms for California precipitation, how to separate natural and human drivers of the drying, and how to extend skillful chill outlooks beyond one month.</p></div></li>
+</ul>
+</div>
+</div></section>
+
+<section id="dashboards"><div class="wrap">
+<div class="sec-head"><p class="eyebrow">Interactive</p><h2>Dashboards</h2><p class="lede">Each dashboard is built from the published results and the public forecast archive. Every chart states where its numbers come from.</p></div>
+<div class="findings three">
+<a class="finding" href="dashboards/mjo.html" style="text-decoration:none;color:inherit"><p class="eyebrow">Study 2</p><p class="figure-num" style="font-size:1.35rem">MJO forecast skill</p><p>Skill by lead time and correction method, the history test, seasonality, and a browser for 2,080 FuXi-S2S ensemble forecasts from 2002–2021.</p></a>
+<a class="finding" href="dashboards/precipitation.html" style="text-decoration:none;color:inherit"><p class="eyebrow">Study 1</p><p class="figure-num" style="font-size:1.35rem">Precipitation baselines</p><p>Compare a 30-year normal with a recent window, track moving 20-year statistics, and see regional and seasonal losses.</p></a>
+<a class="finding" href="dashboards/chill.html" style="text-decoration:none;color:inherit"><p class="eyebrow">Study 3</p><p class="figure-num" style="font-size:1.35rem">Orchard chill risk</p><p>Chill portions against crop thresholds, the effect of variability versus the mean trend, and forecast accuracy by lead time.</p></a>
+</div>
+</div></section>
+
+<section id="team"><div class="wrap two-col">
+<div class="prose">
+<p class="eyebrow">Team and funding</p>
+<h2 style="font-size:1.6rem">Who did the work</h2>
+<p>The project "A fusion outlook product for predicting climate water variation toward efficient decision making" is led by Isabella Velicogna (UC Irvine and NASA Jet Propulsion Laboratory) with Geruo A (UC Irvine). Study authors include Gulnaz Shalgumbayeva and Khalil Virji (UC Irvine), Prakash K. Jha and Tapan B. Pathak (UC Agriculture and Natural Resources, UC Merced), and Natalia Pinzón with colleagues across UC Davis, UC Cooperative Extension and the USDA California Climate Hub.</p>
+<p>Funding: University of California Office of the President, California Climate Action Seed Grant R02CP7584. The decision-tools survey was also supported by USDA NIFA (2022-68017-36358, 2021-69012-35916). Computing for the MJO and chill analyses used NSF NCAR Derecho and Casper.</p>
+</div>
+<div class="prose" id="data">
+<p class="eyebrow">Open data and code</p>
+<h2 style="font-size:1.6rem">Reproduce the results</h2>
+<ul>
+<li>MJO models, bias correction and FuXi-S2S RMM forecast indices: <a href="https://github.com/khalilv/mjo-predict">github.com/khalilv/mjo-predict</a></li>
+<li>Chill computations: <a href="https://github.com/pkj002/califo_work/tree/main/CommSust">github.com/pkj002/califo_work</a>; processed data: <a href="https://doi.org/10.5281/zenodo.20058559">doi.org/10.5281/zenodo.20058559</a></li>
+<li>Precipitation supplementary data: <a href="https://doi.org/10.1088/2515-7620/ae5eda/data1">doi.org/10.1088/2515-7620/ae5eda/data1</a></li>
+<li>Observations: <a href="https://prism.oregonstate.edu">PRISM</a>, <a href="https://www.northwestknowledge.net/metdata/data/">GRIDMET</a>, <a href="https://cimis.water.ca.gov">CIMIS</a>; forecasts: <a href="https://huggingface.co/datasets/FudanFuXi/FuXi-S2S">FuXi-S2S archive</a>, <a href="https://cds.climate.copernicus.eu/">ECMWF via Copernicus</a></li>
+</ul>
+</div>
+</div></section>
+
+<section id="references"><div class="wrap">
+<div class="sec-head"><p class="eyebrow">References</p><h2>Publications</h2></div>
+<ol class="refs">
+<li>Shalgumbayeva, G., A, G. &amp; Velicogna, I. (2026). Recent shift in California's precipitation distribution based on observations. <i>Environmental Research Communications</i> 8, 041013. <a href="https://doi.org/10.1088/2515-7620/ae5eda">https://doi.org/10.1088/2515-7620/ae5eda</a></li>
+<li>Virji, K., A, G. &amp; Velicogna, I. (2026). On the importance of historical context and bias correction in deep learning MJO prediction models. <i>npj Climate and Atmospheric Science</i> 9, 193. <a href="https://doi.org/10.1038/s41612-026-01459-9">https://doi.org/10.1038/s41612-026-01459-9</a></li>
+<li>Jha, P. K., A, G., Pathak, T. B. &amp; Velicogna, I. (2026). From intermittent to persistent chill insufficiency in California's specialty crops. <i>Communications Sustainability</i> 1, 76. <a href="https://doi.org/10.1038/s44458-026-00084-0">https://doi.org/10.1038/s44458-026-00084-0</a></li>
+<li>Pinzón, N., Velicogna, I., Roche, L. M., Cooper, M. H., Ikendi, S., Parker, L. E., Koundinya, V., Taku-Forchu, N., A, G. &amp; Pathak, T. B. (2026). Climate tools without climate consensus: weather and climate decision support tools create openings for agricultural adaptation. <i>Climatic Change</i> 179, 226. <a href="https://doi.org/10.1007/s10584-026-04253-x">https://doi.org/10.1007/s10584-026-04253-x</a></li>
+</ol>
+</div></section>
+
+</main>
+<footer class="site"><div class="wrap">
+<div class="row"><strong style="color:var(--ink)">Fusion Outlook</strong><span>Observations and AI for California water and agriculture decisions</span></div>
+<div class="row">
+<span>Funded by the University of California Office of the President, California Climate Action Seed Grant R02CP7584</span>
+<span>Lead institution: University of California, Irvine</span>
+</div>
+<div class="row">
+<a href="index.html#references">References</a>
+<a href="dashboards/index.html">Dashboards</a>
+<a href="index.html#data">Data and code</a>
+<span>Figures reproduced from open-access articles under CC BY 4.0, cropped and recompressed for the web.</span>
+</div>
+</div></footer>
+</body>
+</html>

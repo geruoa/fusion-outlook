@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>MJO Prediction with AI</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Study 2: AI-based MJO prediction reaches 40 skillful days; long history does not help, and bias correction helps only after week 3.">
+<meta property="og:title" content="MJO Prediction with AI">
+<meta property="og:description" content="Study 2: AI-based MJO prediction reaches 40 skillful days; long history does not help, and bias correction helps only after week 3.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Schibsted+Grotesk:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
+<link rel="stylesheet" href="../assets/site.css">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+</head>
+<body>
+<header class="topbar"><div class="wrap">
+<a class="brand" href="../index.html"><svg class="brand-mark" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M4.6 4.6l14.8 14.8M19.4 4.6L4.6 19.4M1.5 12h21M12 1.5v21" stroke="currentColor" stroke-width="0.8" opacity=".35"/><path d="M12.2 12.4c1.9-.9 3.4 1.2 2.3 2.9-1.7 2.6-6.1 1.3-6.1-2.2 0-4.2 5.4-6.1 8.8-3.3" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round"/></svg><span>Fusion Outlook</span><small>UC Climate Action</small></a>
+<nav class="nav" aria-label="Site"><a href="../index.html">Overview</a><a href="../papers/precipitation-shift.html">Precipitation shift</a><a href="../papers/mjo-prediction.html" aria-current="page">MJO prediction</a><a href="../papers/chill-risk.html">Chill risk</a><a href="../papers/decision-tools.html">Decision tools</a><a href="../dashboards/index.html">Dashboards</a></nav>
+</div></header>
+<main>
+<header class="paper-head"><div class="wrap">
+<p class="eyebrow">Study 2 of 4 · Predict</p>
+<h1>On the importance of historical context and bias correction in deep learning MJO prediction models</h1>
+<p class="authors">Khalil Virji, Geruo A, Isabella Velicogna</p>
+<p class="venue"><i>npj Climate and Atmospheric Science</i> 9, 193 (2026) · Open access · <a href="https://doi.org/10.1038/s41612-026-01459-9">doi.org/10.1038/s41612-026-01459-9</a></p>
+<div class="actions"><a class="btn solid" href="../dashboards/mjo.html">Open the dashboard</a><a class="btn" href="https://doi.org/10.1038/s41612-026-01459-9">Read the article</a><a class="btn" href="https://github.com/khalilv/mjo-predict">Code and forecast indices</a></div>
+</div></header>
+<section><div class="wrap" style="display:grid;gap:28px">
+<p class="lede">The Madden–Julian Oscillation (MJO) is the main source of weather predictability 2 to 6 weeks ahead, and it shapes atmospheric rivers and Sierra Nevada snowpack. We paired FuXi-S2S, an AI foundation model for global subseasonal forecasting, with state-of-the-art time-series and bias-correction models. The corrected forecasts set a new benchmark of 40 skillful days, and the experiments answer two open questions: whether a longer MJO history helps, and whether bias correction works for AI models the way it does for physics-based models.</p>
+<div class="findings four"><div class="finding"><p class="figure-num">40 days</p><p>Skillful MJO horizon (bivariate correlation ≥ 0.5) after LSTM bias correction of FuXi-S2S, up from 37 days. Operational systems such as ECMWF reach about 30.</p></div><div class="finding"><p class="figure-num">−11%</p><p>Reduction in forecast error (bivariate MSE) in weeks 5–6. For forecasts of a strong MJO the reduction is 19%.</p></div><div class="finding"><p class="figure-num">9–12 days</p><p>Skill from MJO history alone, whether the model sees 1 day or 720 days of past behavior. The current state carries the predictive information.</p></div><div class="finding"><p class="figure-num">Week 3+</p><p>Bias correction only starts to help after week 3 for the AI model. In earlier studies of physics models it helped from day 1.</p></div></div>
+</div></section>
+
+<section><div class="wrap two-col">
+<div class="prose">
+<p class="eyebrow">Why it matters</p>
+<h2 style="font-size:1.6rem">For California water forecasting</h2>
+<ul class="ledger" style="margin-top:6px">
+<li><span class="tag">Lead time</span><div><h4>Three more days of reliable guidance in weeks 3–6</h4><p>The added lead falls in the range that matters for reservoir operations, drought preparedness and allocation planning.</p></div></li>
+<li><span class="tag">Trust</span><div><h4>Know when to rely on a forecast</h4><p>When FuXi-S2S predicts a strong MJO (amplitude ≥ 1), skill holds through the full 42 days. Weak-MJO forecasts are skillful to about 24 days. Forecasts started in May and September–February run past 40 days; March and summer starts are shorter.</p></div></li>
+<li><span class="tag">2017 case</span><div><h4>The February 2017 event was visible weeks ahead</h4><p>In a case study from the project's briefing to California water managers, the AI model anticipated the strong mid-February MJO 3–4 weeks before its peak, in step with the run of heavy precipitation that stressed Oroville Dam. ECMWF underestimated its strength and ended it too early.</p></div></li>
+</ul>
+</div>
+<div class="prose">
+<p class="eyebrow">Why it matters</p>
+<h2 style="font-size:1.6rem">For model developers and funders</h2>
+<ul class="ledger" style="margin-top:6px">
+<li><span class="tag">Inputs</span><div><h4>Invest in the initial state, not in longer history</h4><p>Extended lookback windows add nothing, so better representation of the current atmosphere (moisture fields, resolution over the Maritime Continent) is the more promising direction. It also keeps operational systems simple.</p></div></li>
+<li><span class="tag">Evaluation</span><div><h4>Separate model error from dataset mismatch</h4><p>Verifying against Bureau of Meteorology indices instead of indices built from the model's own input data makes bias correction look much stronger: the LSTM cuts error 38% in weeks 1–2. Part of the gain reported for physics models likely comes from such mismatches.</p></div></li>
+<li><span class="tag">Next</span><div><h4>Amplitude damping needs new training objectives</h4><p>FuXi-S2S underestimates MJO amplitude and moves it too fast after week 3. Correction trades one error for the other, so fixing it requires changes to how AI models are trained, such as probabilistic losses and large ensembles.</p></div></li>
+</ul>
+</div>
+</div></section>
+
+<section><div class="wrap" style="display:grid;gap:36px">
+<div class="sec-head" style="margin-bottom:0"><p class="eyebrow">Figures</p><h2>Key results</h2></div>
+<figure class="fig "><div class="frame"><img src="../assets/img/mjo-fig1.webp" alt="<b>Figure 1" loading="lazy"></div>
+<figcaption><b>Figure 1.</b> Skill of two leading time-series models, the Temporal Fusion Transformer (a) and TSMixer (b), when forecasting the MJO from its own history. Black marks show where correlation drops below 0.5. Adding history beyond the current state (L = 1) does not extend the 9–12 day skillful window. <span class="credit">Virji et al. 2026, Fig. 1, CC BY 4.0</span></figcaption></figure>
+<figure class="fig "><div class="frame"><img src="../assets/img/mjo-fig2.webp" alt="<b>Figure 2" loading="lazy"></div>
+<figcaption><b>Figure 2.</b> Bivariate correlation (a) and error (b) for FuXi-S2S with three corrections: mean bias, multivariate linear regression and an LSTM network. Faded segments are not significantly different from the uncorrected forecast at 95% confidence. <span class="credit">Virji et al. 2026, Fig. 2, CC BY 4.0</span></figcaption></figure>
+<div class="fig-grid split">
+<figure class="fig "><div class="frame"><img src="../assets/img/mjo-fig7.webp" alt="<b>Figure 7" loading="lazy"></div>
+<figcaption><b>Figure 7.</b> 42-day composite trajectories in RMM phase space: FuXi-S2S ensemble mean (blue) and observations (dashed), 2002–2017. Each phase marks where MJO convection sits along the equator. <span class="credit">Virji et al. 2026, Fig. 7, CC BY 4.0</span></figcaption></figure>
+<figure class="fig "><div class="frame"><img src="../assets/img/mjo-fig8.webp" alt="<b>Figure 8" loading="lazy"></div>
+<figcaption><b>Figure 8.</b> Skill by initialization month. Forecasts started in May and September–February stay above 0.5 correlation beyond 40 days; March and late-summer starts drop below it near 35 days. <span class="credit">Virji et al. 2026, Fig. 8, CC BY 4.0</span></figcaption></figure>
+</div>
+<figure class="fig "><div class="frame"><img src="../assets/img/mjo-fig4.webp" alt="<b>Figure 4" loading="lazy"></div>
+<figcaption><b>Figure 4.</b> Skill split by the forecast's own MJO amplitude: weak (a, b) and strong (c, d). Strong-MJO forecasts remain skillful through 42 days, and correction cuts their weeks 5–6 error by up to 19%. <span class="credit">Virji et al. 2026, Fig. 4, CC BY 4.0</span></figcaption></figure>
+<div class="fig-grid split">
+<figure class="fig "><div class="frame"><img src="../assets/img/mjo-case-20170201.webp" alt="<b>Case study" loading="lazy"></div>
+<figcaption><b>Case study.</b> Forecast from 1 February 2017, two weeks before the peak of a strong MJO event. The AI forecast (blue) captures the event's strength and ending; ECMWF (red) underestimates it and ends it early. Observed trajectory dashed. <span class="credit">Project briefing, Oct 2025</span></figcaption></figure>
+<figure class="fig "><div class="frame"><img src="../assets/img/mjo-case-precip2017.webp" alt="<b>Case study" loading="lazy"></div>
+<figcaption><b>Case study.</b> MJO amplitude and daily California precipitation, December 2016 – March 2017. The strongest MJO activity coincides with the sustained heavy precipitation of mid-February 2017. <span class="credit">Project briefing, Oct 2025</span></figcaption></figure>
+</div>
+</div></section>
+
+<section><div class="wrap two-col">
+<div class="prose">
+<p class="eyebrow">What we did</p>
+<h2 style="font-size:1.4rem">Data and methods</h2>
+<p>The MJO is tracked with the two Real-time Multivariate MJO (RMM) indices, computed from NOAA outgoing longwave radiation and ERA5 winds at 850 and 250 hPa over a 1979–2001 reference period. Our indices correlate at 0.91 with the Bureau of Meteorology's.</p>
+<p>FuXi-S2S forecasts come from its public archive: 51-member ensembles out to 42 days, initialized every 3–4 days from 2002 to 2021. Models were trained on 2002–2017, validated on 2018 and tested on 2019–2021.</p>
+<p>For the history test, TFT and TSMixer models received lookback windows from none to 720 days. For bias correction, mean-bias, linear-regression and LSTM models were trained separately for each lead time and phase group. Significance comes from 1,000-sample paired bootstrap tests.</p>
+</div>
+<div class="prose">
+<p class="eyebrow">Limits</p>
+<h2 style="font-size:1.4rem">Read with care</h2>
+<ul>
+<li>FuXi-S2S was trained on 1950–2016, so skill measured over that period, such as the seasonality analysis, may be higher than for new years.</li>
+<li>Results are for one AI model and a three-year test period. Other architectures may show different biases.</li>
+<li>History may still carry information in fields the RMM indices do not capture, such as stratospheric winds or moisture.</li>
+</ul>
+<h3>Cite</h3>
+<p class="cite">Virji, K., A, G. &amp; Velicogna, I. (2026). On the importance of historical context and bias correction in deep learning MJO prediction models. npj Climate and Atmospheric Science, 9, 193. https://doi.org/10.1038/s41612-026-01459-9</p>
+</div>
+</div></section>
+<section><div class="wrap"><nav class="pager" aria-label="Study sequence"><a class="prev" href="../papers/precipitation-shift.html"><span class="eyebrow">Previous · Study 1</span><strong>California's precipitation shift</strong></a><a class="next" href="../papers/chill-risk.html"><span class="eyebrow">Next · Study 3</span><strong>Chill insufficiency in specialty crops</strong></a></nav></div></section>
+
+</main>
+<footer class="site"><div class="wrap">
+<div class="row"><strong style="color:var(--ink)">Fusion Outlook</strong><span>Observations and AI for California water and agriculture decisions</span></div>
+<div class="row">
+<span>Funded by the University of California Office of the President, California Climate Action Seed Grant R02CP7584</span>
+<span>Lead institution: University of California, Irvine</span>
+</div>
+<div class="row">
+<a href="../index.html#references">References</a>
+<a href="../dashboards/index.html">Dashboards</a>
+<a href="../index.html#data">Data and code</a>
+<span>Figures reproduced from open-access articles under CC BY 4.0, cropped and recompressed for the web.</span>
+</div>
+</div></footer>
+</body>
+</html>
