@@ -2,9 +2,9 @@ from common import page
 
 CORE = [
     ("velicogna", "Isabella Velicogna", "Professor of Earth System Science, UC Irvine; part-time faculty, NASA Jet Propulsion Laboratory",
-     "Project lead. GRACE satellite gravimetry expert who works with western U.S. water agencies to put satellite data to use."),
+     "Project lead. PI of multi-institution NASA-funded projects. Collaborates and co-designs with western U.S. water agencies to put Earth science and satellite data to real-world use."),
     ("a", "Geruo A", "Project Scientist, UC Irvine",
-     "Co-leads the AI-based MJO and S2S prediction work and the tools built with California water agencies."),
+     "Co-lead. Bridges scientific development and applications with observations and AI/ML."),
     ("virji", "Khalil Virji", "Assistant Specialist, UC Irvine (now Machine Learning Engineer, Aurora)",
      "Built the deep learning MJO prediction and bias-correction models."),
     ("shalgumbayeva", "Gulnaz Shalgumbayeva", "PhD Candidate, UC Irvine",
@@ -37,7 +37,6 @@ COLLAB = [
     ("Danny Merkley", "KnoWater Consulting"),
     ("Tom Stein", "American Farmland Trust"),
     ("Maziar Raissi", "University of Colorado Boulder"),
-    ("Elena Shevliakova", "NOAA Geophysical Fluid Dynamics Laboratory"),
 ]
 
 
@@ -73,9 +72,6 @@ def build():
 <ul class="roster cols">{names(COLLAB)}</ul>
 </div></section>
 
-<section><div class="wrap"><div class="prose">
-<p class="eyebrow">Contact</p>
-<p class="small" style="font-family:var(--ui)">Isabella Velicogna · <span class="mono">isabella@uci.edu</span><br>Geruo A · <span class="mono">geruoa@uci.edu</span></p>
-</div></div></section>
+
 """
     return page("Fusion Outlook Team", "The UC Irvine core team, research partners, end-user partners and collaborators behind the Fusion Outlook project.", "team", d, body)
