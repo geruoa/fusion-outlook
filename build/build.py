@@ -1,9 +1,10 @@
 import os, re, sys
 sys.path.insert(0, os.path.dirname(__file__))
-import p_index, p_papers, p_dash
+import p_index, p_papers, p_dash, p_team
 OUT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 pages = {
  'index.html': p_index.build(),
+ 'team.html': p_team.build(),
  'papers/precipitation-shift.html': p_papers.precip(),
  'papers/mjo-prediction.html': p_papers.mjo(),
  'papers/chill-risk.html': p_papers.chill(),

@@ -132,8 +132,9 @@ def build():
 <section id="team"><div class="wrap two-col">
 <div class="prose">
 <p class="eyebrow">Team and funding</p>
-<h2 style="font-size:1.6rem">Who did the work</h2>
-<p>The project "A fusion outlook product for predicting climate water variation toward efficient decision making" is led by Isabella Velicogna (UC Irvine and NASA Jet Propulsion Laboratory) with Geruo A (UC Irvine). Study authors include Gulnaz Shalgumbayeva and Khalil Virji (UC Irvine), Prakash K. Jha and Tapan B. Pathak (UC Agriculture and Natural Resources, UC Merced), and Natalia Pinzón with colleagues across UC Davis, UC Cooperative Extension and the USDA California Climate Hub.</p>
+<h2 style="font-size:1.6rem">Team effort</h2>
+<p>The project "A fusion outlook product for predicting climate water variation toward efficient decision making" is led by Isabella Velicogna and Geruo A at UC Irvine, with research partners at UC Merced and UC Davis, end-user partners at the California Department of Water Resources and Salt River Project, and collaborators in agriculture, industry and Earth system modeling.</p>
+<p><a class="btn" href="team.html">Meet the team</a></p>
 <p>Funding: University of California Office of the President, California Climate Action Seed Grant R02CP7584. The decision-tools survey was also supported by USDA NIFA (2022-68017-36358, 2021-69012-35916). Computing for the MJO and chill analyses used NSF NCAR Derecho and Casper.</p>
 </div>
 <div class="prose" id="data">

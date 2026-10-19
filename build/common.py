@@ -18,6 +18,7 @@ NAV = [
     ("papers/chill-risk.html", "Chill risk", "p3"),
     ("papers/decision-tools.html", "Decision tools", "p4"),
     ("dashboards/index.html", "Dashboards", "dash"),
+    ("team.html", "Team", "team"),
 ]
 
 
@@ -66,6 +67,7 @@ def footer(depth):
 <div class="row">
 <a href="{r}index.html#references">References</a>
 <a href="{r}dashboards/index.html">Dashboards</a>
+<a href="{r}team.html">Team</a>
 <a href="{r}index.html#data">Data and code</a>
 <span>Figures reproduced from open-access articles under CC BY 4.0, cropped and recompressed for the web.</span>
 </div>
