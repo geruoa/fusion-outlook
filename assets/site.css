@@ -282,3 +282,6 @@ table.data td:first-child, table.data th:first-child { white-space: normal; min-
   .people { grid-template-columns: minmax(0, 1fr); gap: 22px; }
   .person { grid-template-columns: 96px minmax(0, 1fr); gap: 14px; align-items: start; }
 }
+.person .cv { font-family: var(--ui); font-size: 0.88rem; margin-top: 8px; display: flex; gap: 8px; align-items: baseline; flex-wrap: wrap; }
+.person .cv a { font-weight: 600; }
+.person .cv span { font-size: 0.78rem; color: var(--ink-3); }

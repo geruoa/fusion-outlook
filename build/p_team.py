@@ -13,6 +13,8 @@ CORE = [
      "Develops an AI agent that runs geoscience data pipelines, and extends GRACE glacier records to the present."),
 ]
 
+CV = {"velicogna": '<p class="cv"><a href="assets/docs/Velicogna_CV.pdf" download="Velicogna_CV.pdf">Curriculum Vitae</a> <span>PDF, 24 pages</span></p>'}
+
 EXTENDED = [
     ("Prakash K. Jha", "UC Merced"),
     ("Tapan B. Pathak", "UC Merced"),
@@ -44,7 +46,7 @@ def build():
     d = 0
     core = "".join(f"""<article class="person">
 <img src="assets/img/team/{slug}.webp" alt="{name}" width="360" height="360" loading="lazy">
-<div><h3>{name}</h3><p class="role">{role}</p><p class="bio">{bio}</p></div>
+<div><h3>{name}</h3><p class="role">{role}</p><p class="bio">{bio}</p>{CV.get(slug, "")}</div>
 </article>""" for slug, name, role, bio in CORE)
     names = lambda rows: "".join(f'<li><strong>{n}</strong><span>{a}</span></li>' for n, a in rows)
     partners = "".join(f'<li><strong>{n}</strong><span>{r}</span><em>{b}</em></li>' for n, r, b in PARTNERS)
