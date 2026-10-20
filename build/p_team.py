@@ -38,7 +38,7 @@ COLLAB = [
     ("Peter Moller", "Rubicon Water"),
     ("Danny Merkley", "KnoWater Consulting"),
     ("Tom Stein", "American Farmland Trust"),
-    ("Maziar Raissi", "UC Davis"),
+    ("Maziar Raissi", "UC Riverside"),
 ]
 
 
