@@ -15,8 +15,20 @@
   /* ---------------- skill vs lead ---------------- */
   const skillEl = document.getElementById('skill-chart');
   const skillTip = V.tip(skillEl);
-  function horizon(v) { const i = v.findIndex((x) => x < 0.5); return i === -1 ? 42 : i; }
+  function horizon(v) { const i = v.findIndex((x) => x <= 0.5); return i === -1 ? 42 : i; }
   function weekMean(v, a, b) { return d3.mean(v.slice(a - 1, b)); }
+  // solid where significant vs FuXi-S2S, faded elsewhere
+  function drawSigLine(svg, line, pts, M) {
+    svg.append('path').datum(pts).attr('d', line).style('fill', 'none').style('stroke', M.color)
+      .style('stroke-width', 2).style('stroke-dasharray', M.dash || null).style('opacity', 0.35);
+    const segs = []; let run = [];
+    for (let i = 0; i < pts.length; i++) {
+      if (pts[i].s) { run.push(pts[i]); } else { if (run.length > 1) segs.push(run); run = []; }
+    }
+    if (run.length > 1) segs.push(run);
+    segs.forEach((sg) => svg.append('path').datum(sg).attr('d', line).style('fill', 'none').style('stroke', M.color)
+      .style('stroke-width', 2.2).style('stroke-dasharray', M.dash || null).style('stroke-linejoin', 'round'));
+  }
 
   function drawSkill() {
     const key = state.subset + '_' + state.metric;
@@ -51,16 +63,7 @@
       if (!state.show[M.k] || !C[M.k]) return;
       const v = C[M.k].v, sig = C[M.k].sig;
       const pts = LEADS.map((l, i) => ({ l, v: v[i], s: M.k === 'fuxi' ? true : sig[i] !== false }));
-      // draw significant and non-significant as separate passes
-      svg.append('path').datum(pts).attr('d', line).style('fill', 'none').style('stroke', M.color)
-        .style('stroke-width', 2).style('stroke-dasharray', M.dash || null).style('opacity', 0.35);
-      const segs = []; let run = [];
-      for (let i = 0; i < pts.length; i++) {
-        if (pts[i].s) { run.push(pts[i]); } else { if (run.length > 1) segs.push(run); run = []; }
-      }
-      if (run.length > 1) segs.push(run);
-      segs.forEach((sg) => svg.append('path').datum(sg).attr('d', line).style('fill', 'none').style('stroke', M.color)
-        .style('stroke-width', 2.2).style('stroke-dasharray', M.dash || null).style('stroke-linejoin', 'round'));
+      drawSigLine(svg, line, pts, M);
     });
     // hover
     const cross = svg.append('line').style('stroke', 'var(--ink-3)').style('stroke-width', 1).attr('y1', m.t).attr('y2', H - m.b).style('opacity', 0);
@@ -78,29 +81,31 @@
 
   function drawReadout(C) {
     const el = document.getElementById('skill-readout');
-    const sub = { all: 'all forecasts', high: 'high-amplitude forecasts (FuXi-S2S amplitude ≥ 1)', low: 'low-amplitude forecasts (amplitude < 1)', bom: 'all forecasts, verified against Bureau of Meteorology RMM' }[state.subset];
     if (state.metric === 'bcor') {
       const rows = METHODS.map((M) => {
         const h = horizon(C[M.k].v); const txt = h >= 42 ? '≥ 42' : String(h);
         return `<tr><td><span class="swatch${M.dash ? ' dash' : ''}" style="background:${M.dash ? '' : M.color}"></span> ${M.label}</td><td>${txt}</td></tr>`;
       }).join('');
-      el.innerHTML = `<p class="note">Skillful horizon = last lead day with BCOR ≥ 0.5, for ${sub}.</p>
+      el.innerHTML = `<p class="note">Skillful horizon = last lead day with BCOR &gt; 0.5</p>
         <div class="table-wrap"><table class="data"><thead><tr><th>Method</th><th>Skillful days</th></tr></thead><tbody>${rows}</tbody></table></div>`;
     } else {
       const f = C.fuxi.v;
       const cell = (M, a, b) => {
         if (M.k === 'fuxi') return V.fmt.p2(weekMean(f, a, b));
-        if (a === 1 && state.subset !== 'bom') return '<span class="muted">negligible</span>';
         const ch = weekMean(C[M.k].v, a, b) / weekMean(f, a, b) - 1;
-        return (ch <= 0 ? '−' : '+') + Math.abs(ch * 100).toFixed(0) + '%';
+        const nSig = C[M.k].sig.slice(a - 1, b).filter(Boolean).length;
+        const pct = Math.round(ch * 100);
+        const txt = (pct < 0 ? '−' : pct > 0 ? '+' : '') + Math.abs(pct) + '%';
+        // muted where most leads in the window are not significant
+        return nSig * 2 < b - a + 1 ? `<span class="muted">${txt}</span>` : txt;
       };
       const rows = METHODS.map((M) => `<tr><td><span class="swatch${M.dash ? ' dash' : ''}" style="background:${M.dash ? '' : M.color}"></span> ${M.label}</td><td>${cell(M, 1, 14)}</td><td>${cell(M, 15, 28)}</td><td>${cell(M, 29, 42)}</td></tr>`).join('');
-      el.innerHTML = `<p class="note">FuXi-S2S row: mean BMSE. Correction rows: change in mean BMSE relative to FuXi-S2S, for ${sub}.</p>
-        <div class="table-wrap"><table class="data"><thead><tr><th>Method</th><th>Wk 1–2</th><th>Wk 3–4</th><th>Wk 5–6</th></tr></thead><tbody>${rows}</tbody></table></div>`;
+      el.innerHTML = `<p class="note">FuXi-S2S row: mean BMSE. Correction rows: change in mean BMSE relative to FuXi-S2S.</p>
+        <div class="table-wrap"><table class="data"><thead><tr><th>Method</th><th>Week 1–2</th><th>Week 3–4</th><th>Week 5–6</th></tr></thead><tbody>${rows}</tbody></table></div>`;
     }
   }
 
-  V.seg(document.getElementById('metric-seg'), [['bcor', 'Correlation'], ['bmse', 'Error (BMSE)']], 'bcor', (v) => { state.metric = v; drawSkill(); });
+  V.seg(document.getElementById('metric-seg'), [['bcor', 'Bivariate Correlation (BCOR)'], ['bmse', 'Bivariate MSE (BMSE)']], 'bcor', (v) => { state.metric = v; drawSkill(); });
   V.seg(document.getElementById('subset-seg'), [['all', 'All'], ['high', 'Strong MJO'], ['low', 'Weak MJO'], ['bom', 'vs BoM indices']], 'all', (v) => { state.subset = v; drawSkill(); });
   const lg = document.getElementById('method-toggles');
   METHODS.forEach((M) => {
@@ -126,15 +131,18 @@
     svg.append('line').attr('x1', m.l).attr('x2', W - m.r).attr('y1', y(0)).attr('y2', y(0)).style('stroke', 'var(--ink-3)');
     svg.append('text').attr('x', (W + m.l) / 2).attr('y', H - 6).attr('text-anchor', 'middle').text('Lead time (days)');
     svg.append('text').attr('transform', `translate(12,${(H - m.b + m.t) / 2}) rotate(-90)`).attr('text-anchor', 'middle').text(state.bias === 'amp_bias' ? 'Amplitude bias' : 'Phase bias (rad)');
-    const line = d3.line().x((d, i) => x(i + 1)).y((d) => y(d));
-    METHODS.forEach((M) => svg.append('path').datum(C[M.k].v).attr('d', line).style('fill', 'none').style('stroke', M.color).style('stroke-width', 2).style('stroke-dasharray', M.dash || null));
+    const line = d3.line().x((d) => x(d.l)).y((d) => y(d.v));
+    METHODS.forEach((M) => {
+      const pts = LEADS.map((l, i) => ({ l, v: C[M.k].v[i], s: M.k === 'fuxi' || !C[M.k].sig || C[M.k].sig[i] !== false }));
+      drawSigLine(svg, line, pts, M);
+    });
     const cross = svg.append('line').style('stroke', 'var(--ink-3)').attr('y1', m.t).attr('y2', H - m.b).style('opacity', 0);
     svg.append('rect').attr('x', m.l).attr('y', m.t).attr('width', W - m.l - m.r).attr('height', H - m.t - m.b).style('fill', 'transparent')
       .on('pointermove', (ev) => {
         const [px] = d3.pointer(ev); const l = Math.max(1, Math.min(42, Math.round(x.invert(px))));
         cross.attr('x1', x(l)).attr('x2', x(l)).style('opacity', 1);
         let html = `<div class="t">Lead ${l} days</div>`;
-        METHODS.forEach((M) => { html += V.row(M.color, M.label.replace(' correction', ''), V.fmt.p3(C[M.k].v[l - 1]), !!M.dash); });
+        METHODS.forEach((M) => { const s = M.k !== 'fuxi' && C[M.k].sig && C[M.k].sig[l - 1] === false ? ' <span class="muted">(n.s.)</span>' : ''; html += V.row(M.color, M.label.replace(' correction', ''), V.fmt.p3(C[M.k].v[l - 1]) + s, !!M.dash); });
         const r = biasEl.getBoundingClientRect(); biasTip.show(html, ev.clientX - r.left, ev.clientY - r.top);
       }).on('pointerleave', () => { cross.style('opacity', 0); biasTip.hide(); });
   }
@@ -152,8 +160,8 @@
     svg.append('g').attr('transform', `translate(${m.l},0)`).call((g) => V.gridY(g, y, W - m.l - m.r));
     svg.append('g').attr('class', 'axis').attr('transform', `translate(0,${H - m.b})`).call(d3.axisBottom(x).tickSizeOuter(0));
     svg.append('g').attr('class', 'axis').attr('transform', `translate(${m.l},0)`).call(d3.axisLeft(y).tickValues([0, 10, 20, 30, 40]).tickSizeOuter(0));
-    svg.append('text').attr('x', (W + m.l) / 2).attr('y', H - 8).attr('text-anchor', 'middle').text('Days of MJO history given to the model (lookback L)');
-    svg.append('text').attr('transform', `translate(12,${(H - m.b + m.t) / 2}) rotate(-90)`).attr('text-anchor', 'middle').text('Skillful days (BCOR ≥ 0.5)');
+    svg.append('text').attr('x', (W + m.l) / 2).attr('y', H - 8).attr('text-anchor', 'middle').text('Days of MJO history given to the model');
+    svg.append('text').attr('transform', `translate(12,${(H - m.b + m.t) / 2}) rotate(-90)`).attr('text-anchor', 'middle').text('Skillful days (BCOR > 0.5)');
     svg.append('line').attr('x1', m.l).attr('x2', W - m.r).attr('y1', y(LB.fuxi)).attr('y2', y(LB.fuxi)).style('stroke', 'var(--neutral-mark)').style('stroke-dasharray', '5 4');
     svg.append('text').attr('x', (x('90') + x('180')) / 2).attr('y', y(LB.fuxi) + 15).attr('text-anchor', 'middle').style('font-size', '10.5px').style('fill', 'var(--ink-2)').text('FuXi-S2S alone: 37 days');
     const series = [
@@ -196,11 +204,11 @@
     G.forEach((row, mi) => row.forEach((v, li) => {
       svg.append('rect').attr('x', x(MON[mi])).attr('y', y(li + 1)).attr('width', x.bandwidth()).attr('height', y.bandwidth() + 0.5)
         .style('fill', col(v + 0.05)).attr('shape-rendering', 'crispEdges')
-        .on('pointerenter', (ev) => { const r = seEl.getBoundingClientRect(); seTip.show(`<div class="t">${MON[mi]} start · lead ${li + 1} d</div><div class="r"><i>BCOR band</i><b>${v.toFixed(1)}–${(v + 0.1).toFixed(1)}</b></div>`, ev.clientX - r.left, ev.clientY - r.top); })
+        .on('pointerenter', (ev) => { const r = seEl.getBoundingClientRect(); const ex = S.season_bcor ? `<div class="r"><i>BCOR</i><b>${V.fmt.p3(S.season_bcor[mi][li])}</b></div>` : ''; seTip.show(`<div class="t">${MON[mi]} start · lead ${li + 1} d</div>${ex}`, ev.clientX - r.left, ev.clientY - r.top); })
         .on('pointerleave', () => seTip.hide());
     }));
     // 0.5 horizon step line
-    const hz = G.map((row) => { const i = row.findIndex((v) => v < 0.5); return i === -1 ? 42 : i; });
+    const hz = (S.season_bcor || G).map((row) => { const i = row.findIndex((v) => (S.season_bcor ? v <= 0.5 : v < 0.5)); return i === -1 ? 42 : i; });
     hz.forEach((h, mi) => {
       if (h >= 42) return;
       svg.append('line').attr('x1', x(MON[mi])).attr('x2', x(MON[mi]) + x.bandwidth()).attr('y1', y(h) + y.bandwidth()).attr('y2', y(h) + y.bandwidth())
@@ -234,10 +242,18 @@
   const phaseOf = (r1, r2) => { const a = Math.atan2(r2, r1) * 180 / Math.PI; return Math.min(8, Math.floor((a + 180) / 45) + 1); };
   const addDays = (d, n) => { const t = new Date(d + 'T00:00:00Z'); t.setUTCDate(t.getUTCDate() + n); return t.toISOString().slice(0, 10); };
 
+  const corrSel = document.getElementById('corr-sel');
+  const CORR_LABEL = { lstm: 'LSTM', mvlr: 'MVLR', mean: 'Mean bias' };
+  const corrTrack = () => (cur && cur.corr && corrSel.value ? cur.corr[corrSel.value] : null);
+  const showObs = () => document.getElementById('show-obs').checked && cur && cur.obs;
+
   async function showDate(d) {
     const yr = d.slice(0, 4); const Y = await loadYear(yr); const F = Y[d];
     const members = F.e.map((flat) => d3.range(42).map((i) => [flat[2 * i] / 100, flat[2 * i + 1] / 100]));
-    cur = { d, mean: F.m, members };
+    cur = { d, mean: F.m, members, obs: F.o ? [F.o0, ...F.o] : null, corr: F.c || null };
+    // corrections exist only for test-period starts
+    corrSel.disabled = !cur.corr;
+    corrSel.title = cur.corr ? '' : 'Corrected forecasts are available for 2019–2021 starts only';
     drawPhase(); drawAmp(); drawExplorerReadout();
   }
 
@@ -246,7 +262,8 @@
     const W = Math.max(280, Math.min(phEl.clientWidth, 520)), H = W;
     const m = 34; const svg = V.svg(phEl, W, H);
     svg.attr('aria-label', 'RMM phase-space trajectory');
-    const lim = Math.max(3, Math.ceil(d3.max(cur.members.flat(), (p) => Math.max(Math.abs(p[0]), Math.abs(p[1]))) * 2) / 2);
+    const pool = cur.members.flat().concat(cur.obs || []);
+    const lim = Math.max(3, Math.ceil(d3.max(pool, (p) => Math.max(Math.abs(p[0]), Math.abs(p[1]))) * 2) / 2);
     const s = d3.scaleLinear([-lim, lim], [m, W - m]); const sy = d3.scaleLinear([-lim, lim], [H - m, m]);
     const g = svg.append('g');
     // sector lines and unit circle
@@ -259,20 +276,30 @@
       const ang = (-180 + 45 * (p - 1) + 22.5) * Math.PI / 180, rr = lim * 0.9;
       g.append('text').attr('x', s(rr * Math.cos(ang))).attr('y', sy(rr * Math.sin(ang)) + 4).attr('text-anchor', 'middle').style('fill', 'var(--ink-3)').style('font-size', '11px').text('P' + p);
     }
-    const reg = [['Western Pacific', 0, lim * 0.97, 0], ['Indian Ocean', 0, -lim * 0.97, 0], ['W. Hem. & Africa', -lim * 0.97, 0, -90], ['Maritime Continent', lim * 0.97, 0, 90]];
+    const reg = [['Western Pacific', 0, lim * 0.97, 0], ['Indian Ocean', 0, -lim * 0.97, 0], ['W. Hem. & Africa', -lim * 0.9, 0, -90], ['Maritime Continent', lim * 0.9, 0, 90]];
     reg.forEach(([t, a, b, rot]) => g.append('text').attr('transform', `translate(${s(a)},${sy(b) + (rot ? 0 : (b > 0 ? 12 : -4))}) rotate(${rot})`).attr('text-anchor', 'middle').style('fill', 'var(--ink-3)').style('font-size', '10.5px').text(t));
     svg.append('text').attr('x', W / 2).attr('y', H - 8).attr('text-anchor', 'middle').text('RMM1');
     svg.append('text').attr('transform', `translate(12,${H / 2}) rotate(-90)`).attr('text-anchor', 'middle').text('RMM2');
     const line = d3.line().x((p) => s(p[0])).y((p) => sy(p[1])).curve(d3.curveCatmullRom.alpha(0.5));
     const showMem = document.getElementById('show-members').checked;
     if (showMem) cur.members.forEach((mm) => svg.append('path').datum(mm).attr('d', line).style('fill', 'none').style('stroke', 'var(--ink-3)').style('stroke-width', 1).style('opacity', 0.22));
-    svg.append('path').datum(cur.mean).attr('d', line).style('fill', 'none').style('stroke', 'var(--surface)').style('stroke-width', 5);
-    svg.append('path').datum(cur.mean).attr('d', line).style('fill', 'none').style('stroke', 'var(--s1)').style('stroke-width', 2.5);
-    cur.mean.forEach((p, i) => {
-      if (i % 5 !== 0 && i !== 41) return;
-      svg.append('circle').attr('cx', s(p[0])).attr('cy', sy(p[1])).attr('r', i === 0 ? 6 : 4).style('fill', i === 0 ? 'var(--s1)' : 'var(--surface)').style('stroke', 'var(--s1)').style('stroke-width', 2);
-      if (i === 0 || i === 41) svg.append('text').attr('x', s(p[0]) + 8).attr('y', sy(p[1]) - 8).style('fill', 'var(--ink)').style('font-weight', 600).text(i === 0 ? 'day 1' : 'day 42');
+    // observed starts at the init date (day 0) so the forecasts can be seen leaving it
+    if (showObs()) {
+      svg.append('path').datum(cur.obs).attr('d', line).style('fill', 'none').style('stroke', 'var(--neutral-mark)').style('stroke-width', 2).style('stroke-dasharray', '5 4');
+      const o0 = cur.obs[0];
+      svg.append('rect').attr('x', s(o0[0]) - 4).attr('y', sy(o0[1]) - 4).attr('width', 8).attr('height', 8).style('fill', 'var(--neutral-mark)');
+    }
+    const ct = corrTrack();
+    const tracks = [{ p: cur.mean, c: 'var(--s1)' }].concat(ct ? [{ p: ct, c: 'var(--s4)' }] : []);
+    tracks.forEach((t) => {
+      svg.append('path').datum(t.p).attr('d', line).style('fill', 'none').style('stroke', 'var(--surface)').style('stroke-width', 5);
+      svg.append('path').datum(t.p).attr('d', line).style('fill', 'none').style('stroke', t.c).style('stroke-width', 2.5);
+      t.p.forEach((p, i) => {
+        if (i % 5 !== 0 && i !== 41) return;
+        svg.append('circle').attr('cx', s(p[0])).attr('cy', sy(p[1])).attr('r', i === 0 ? 6 : 4).style('fill', i === 0 ? t.c : 'var(--surface)').style('stroke', t.c).style('stroke-width', 2);
+      });
     });
+    [0, 41].forEach((i) => { const p = cur.mean[i]; svg.append('text').attr('x', s(p[0]) + 8).attr('y', sy(p[1]) - 8).style('fill', 'var(--ink)').style('font-weight', 600).text(i === 0 ? 'day 1' : 'day 42'); });
     svg.append('rect').attr('x', m).attr('y', m).attr('width', W - 2 * m).attr('height', H - 2 * m).style('fill', 'transparent')
       .on('pointermove', (ev) => {
         const [px, py] = d3.pointer(ev);
@@ -280,14 +307,16 @@
         if (bd > 900) { phTip.hide(); return; }
         const p = cur.mean[best];
         const r = phEl.getBoundingClientRect();
-        phTip.show(`<div class="t">Lead ${best + 1} d · ${addDays(cur.d, best + 1)}</div><div class="r"><i>Phase</i><b>${phaseOf(p[0], p[1])}</b></div><div class="r"><i>Amplitude (ens. mean)</i><b>${V.fmt.p2(Math.hypot(p[0], p[1]))}</b></div>`, ev.clientX - r.left, ev.clientY - r.top);
+        const ex = (lab, q) => `<div class="r"><i>${lab}</i><b>P${phaseOf(q[0], q[1])} | ${V.fmt.p2(Math.hypot(q[0], q[1]))}</b></div>`;
+        const ctp = corrTrack();
+        phTip.show(`<div class="t">Lead ${best + 1} d · ${addDays(cur.d, best + 1)}</div><div class="r"><i></i><b>phase | amplitude</b></div>${ex('FuXi-S2S ens. mean', p)}${ctp ? ex(CORR_LABEL[corrSel.value] + ' corrected', ctp[best]) : ''}${showObs() ? ex('Observed', cur.obs[best + 1]) : ''}`, ev.clientX - r.left, ev.clientY - r.top);
       }).on('pointerleave', () => phTip.hide());
   }
 
   function drawAmp() {
     if (!cur) return;
     const W = Math.max(280, amEl.clientWidth), H = Math.round(Math.min(300, Math.max(210, W * 0.6)));
-    const m = { t: 12, r: 14, b: 40, l: 42 };
+    const m = { t: 12, r: 14, b: 40, l: 50 };
     const svg = V.svg(amEl, W, H);
     const amps = d3.range(42).map((i) => cur.members.map((mm) => Math.hypot(mm[i][0], mm[i][1])).sort(d3.ascending));
     const q = (a, p) => d3.quantileSorted(a, p);
@@ -300,7 +329,13 @@
     svg.append('text').attr('transform', `translate(12,${(H - m.b + m.t) / 2}) rotate(-90)`).attr('text-anchor', 'middle').text('MJO amplitude');
     svg.append('path').datum(amps).attr('d', d3.area().x((d, i) => x(i + 1)).y0((a) => y(q(a, 0.1))).y1((a) => y(q(a, 0.9)))).style('fill', 'var(--s1)').style('opacity', 0.16);
     svg.append('path').datum(amps).attr('d', d3.line().x((d, i) => x(i + 1)).y((a) => y(q(a, 0.5)))).style('fill', 'none').style('stroke', 'var(--s1)').style('stroke-width', 1.5).style('stroke-dasharray', '2 3');
-    svg.append('path').datum(cur.mean).attr('d', d3.line().x((d, i) => x(i + 1)).y((p) => y(Math.hypot(p[0], p[1])))).style('fill', 'none').style('stroke', 'var(--s1)').style('stroke-width', 2.5);
+    const ampLine = d3.line().x((d, i) => x(i + 1)).y((p) => y(Math.hypot(p[0], p[1])));
+    svg.append('path').datum(cur.mean).attr('d', ampLine).style('fill', 'none').style('stroke', 'var(--s1)').style('stroke-width', 2.5);
+    const ct = corrTrack();
+    if (ct) svg.append('path').datum(ct).attr('d', ampLine).style('fill', 'none').style('stroke', 'var(--s4)').style('stroke-width', 2.5);
+    if (showObs()) svg.append('path').datum(cur.obs.slice(1)).attr('d', ampLine).style('fill', 'none').style('stroke', 'var(--neutral-mark)').style('stroke-width', 2).style('stroke-dasharray', '5 4');
+    const lg = document.getElementById('corr-legend'); lg.hidden = !ct;
+    if (ct) document.getElementById('corr-legend-label').textContent = CORR_LABEL[corrSel.value] + ' corrected';
     svg.append('line').attr('x1', m.l).attr('x2', W - m.r).attr('y1', y(1)).attr('y2', y(1)).style('stroke', 'var(--ochre)').style('stroke-dasharray', '4 3');
     svg.append('text').attr('x', m.l + 6).attr('y', y(1) + 14).style('fill', 'var(--ochre)').style('font-size', '10.5px').text('Strong-MJO threshold (1.0)');
     const cross = svg.append('line').style('stroke', 'var(--ink-3)').attr('y1', m.t).attr('y2', H - m.b).style('opacity', 0);
@@ -309,8 +344,11 @@
         const [px] = d3.pointer(ev); const l = Math.max(1, Math.min(42, Math.round(x.invert(px)))); const a = amps[l - 1];
         cross.attr('x1', x(l)).attr('x2', x(l)).style('opacity', 1);
         const r = amEl.getBoundingClientRect();
+        const cta = corrTrack();
         amTip.show(`<div class="t">Lead ${l} d · ${addDays(cur.d, l)}</div>
           <div class="r"><i>Ensemble-mean amplitude</i><b>${V.fmt.p2(Math.hypot(...cur.mean[l - 1]))}</b></div>
+          ${cta ? `<div class="r"><i>${CORR_LABEL[corrSel.value]} corrected</i><b>${V.fmt.p2(Math.hypot(...cta[l - 1]))}</b></div>` : ''}
+          ${showObs() ? `<div class="r"><i>Observed</i><b>${V.fmt.p2(Math.hypot(...cur.obs[l]))}</b></div>` : ''}
           <div class="r"><i>Member median</i><b>${V.fmt.p2(q(a, 0.5))}</b></div>
           <div class="r"><i>Members 10–90%</i><b>${V.fmt.p2(q(a, 0.1))}–${V.fmt.p2(q(a, 0.9))}</b></div>
           <div class="r"><i>Members ≥ 1.0</i><b>${Math.round(100 * a.filter((v) => v >= 1).length / a.length)}%</b></div>`, ev.clientX - r.left, ev.clientY - r.top);
@@ -323,19 +361,24 @@
     const below = cur.mean.findIndex((p) => Math.hypot(...p) < 1);
     const frac = (i) => Math.round(100 * cur.members.filter((mm) => Math.hypot(...mm[i]) >= 1).length / cur.members.length);
     const strong = a0 >= 1;
+    // bivariate MSE of each track against observations over leads 15-42 (weeks 3-6)
+    const err = (t) => d3.mean(d3.range(14, 42), (i) => (t[i][0] - cur.obs[i + 1][0]) ** 2 + (t[i][1] - cur.obs[i + 1][1]) ** 2);
+    const ct = corrTrack();
+    const errTxt = cur.obs ? `<p>Bivariate MSE against observed, weeks 3–6: FuXi-S2S ensemble mean <strong>${V.fmt.p2(err(cur.mean))}</strong>${ct ? `, ${CORR_LABEL[corrSel.value]} corrected <strong>${V.fmt.p2(err(ct))}</strong>` : ''}.</p>` : '';
     el.innerHTML = `
-      <div><span class="pill ${strong ? 'good' : 'warn'}">${strong ? 'Strong MJO at start' : 'Weak MJO at start'}</span></div>
-      <p>Initialized <strong>${cur.d}</strong>. Day-1 forecast: phase <strong>${phaseOf(...p0)}</strong>, amplitude <strong>${V.fmt.p2(a0)}</strong>.</p>
+      <div><span class="pill ${strong ? 'good' : 'warn'}">${strong ? 'Strong MJO forecast on day 1' : 'Weak MJO forecast on day 1'}</span></div>
+      <p>Initialized <strong>${cur.d}</strong>. Day-1 forecast: phase <strong>${phaseOf(...p0)}</strong>, amplitude <strong>${V.fmt.p2(a0)}</strong>.${cur.obs ? ` Observed on the start date: phase <strong>${phaseOf(...cur.obs[0])}</strong>, amplitude <strong>${V.fmt.p2(Math.hypot(...cur.obs[0]))}</strong>.` : ''}</p>
       <p>Ensemble-mean amplitude ${below === -1 ? 'stays at or above 1.0 through day 42' : below === 0 ? 'starts below 1.0' : `falls below 1.0 on day <strong>${below + 1}</strong>`}. Members with amplitude ≥ 1.0: <strong>${frac(13)}%</strong> on day 14, <strong>${frac(27)}%</strong> on day 28, <strong>${frac(41)}%</strong> on day 42.</p>
-      <p class="note">${strong ? 'In the paper, forecasts that start with a strong MJO remained skillful through the full 42-day horizon.' : 'In the paper, forecasts predicting a weak MJO were skillful to about 24 days; treat weeks 4–6 with caution.'}</p>`;
+      ${errTxt}
+      <p class="note">In the paper, leads at which FuXi-S2S forecasts a strong MJO (amplitude ≥ 1) were skillful through the full 42 days; leads with a weak-MJO forecast were skillful to about 24 days, so treat weeks 4–6 of those with caution.${cur.corr ? '' : ' Corrected forecasts are available for 2019–2021 starts only.'}</p>`;
   }
 
   yearSel.addEventListener('change', () => { fillDates(yearSel.value); showDate(dateSel.value); });
   dateSel.addEventListener('change', () => showDate(dateSel.value));
   document.getElementById('show-members').addEventListener('change', drawPhase);
-  document.querySelectorAll('[data-preset]').forEach((b) => b.addEventListener('click', () => {
-    const d = b.dataset.preset; yearSel.value = d.slice(0, 4); fillDates(d.slice(0, 4), d); showDate(d);
-  }));
+  const redrawExplorer = () => { drawPhase(); drawAmp(); drawExplorerReadout(); };
+  document.getElementById('show-obs').addEventListener('change', redrawExplorer);
+  corrSel.addEventListener('change', redrawExplorer);
 
   /* ---------------- damping diagnostic ---------------- */
   const dpEl = document.getElementById('damp-chart'); const dpTip = V.tip(dpEl);
@@ -354,14 +397,16 @@
       ['amp_member_all', 'Members, all starts', 'var(--s1)', null], ['amp_ensmean_all', 'Ensemble mean, all starts', 'var(--s1)', '5 4']];
     const line = d3.line().x((d, i) => x(i + 1)).y((d) => y(d));
     ser.forEach(([k, , c, da]) => svg.append('path').datum(STATS[k]).attr('d', line).style('fill', 'none').style('stroke', c).style('stroke-width', 2.2).style('stroke-dasharray', da));
-    document.getElementById('damp-legend').innerHTML = ser.map(([, l, c, da]) => `<span><span class="swatch" style="background:${da ? `repeating-linear-gradient(90deg, ${c} 0 4px, transparent 4px 7px)` : c}"></span>${l}</span>`).join('');
+    // coloured dashed swatches (V.row only draws a neutral one), shared by legend and tooltip
+    const sw = (c, da) => `<span class="swatch" style="background:${da ? `repeating-linear-gradient(90deg, ${c} 0 4px, transparent 4px 7px)` : c}"></span>`;
+    document.getElementById('damp-legend').innerHTML = ser.map(([, l, c, da]) => `<span>${sw(c, da)}${l}</span>`).join('');
     const cross = svg.append('line').style('stroke', 'var(--ink-3)').attr('y1', m.t).attr('y2', H - m.b).style('opacity', 0);
     svg.append('rect').attr('x', m.l).attr('y', m.t).attr('width', W - m.l - m.r).attr('height', H - m.t - m.b).style('fill', 'transparent')
       .on('pointermove', (ev) => {
         const [px] = d3.pointer(ev); const l = Math.max(1, Math.min(42, Math.round(x.invert(px))));
         cross.attr('x1', x(l)).attr('x2', x(l)).style('opacity', 1);
         const r = dpEl.getBoundingClientRect();
-        dpTip.show(`<div class="t">Lead ${l} days</div>` + ser.map(([k, lab, c]) => V.row(c, lab, V.fmt.p2(STATS[k][l - 1]))).join(''), ev.clientX - r.left, ev.clientY - r.top);
+        dpTip.show(`<div class="t">Lead ${l} days</div>` + ser.map(([k, lab, c, da]) => `<div class="r"><i>${sw(c, da)}${lab}</i><b>${V.fmt.p2(STATS[k][l - 1])}</b></div>`).join(''), ev.clientX - r.left, ev.clientY - r.top);
       }).on('pointerleave', () => { cross.style('opacity', 0); dpTip.hide(); });
   }
 
@@ -370,8 +415,10 @@
   [skillEl, biasEl, lbEl, seEl, phEl, amEl, dpEl].forEach((el) => V.onResize(el, () => {
     ({ 'skill-chart': drawSkill, 'bias-chart': drawBias, 'lookback-chart': drawLookback, 'season-chart': drawSeason, 'phase-chart': drawPhase, 'amp-chart': drawAmp, 'damp-chart': drawDamp })[el.id]();
   }));
-  const start = '2017-01-31';
-  yearSel.value = '2017'; fillDates('2017', start);
+  // open on a typical test-period start (chosen in export_dashboard.py) so the corrected forecast is visible
+  const start = S.default_start || IDX[IDX.length - 1];
+  yearSel.value = start.slice(0, 4); fillDates(start.slice(0, 4), start);
+  corrSel.value = 'lstm';
   await showDate(start);
   all();
 })().catch((e) => {
