@@ -123,7 +123,7 @@ def build():
 <section id="dashboards"><div class="wrap">
 <div class="sec-head"><p class="eyebrow">Interactive</p><h2>Dashboards</h2><p class="lede">Each dashboard is built from the published results and the public forecast archive. Every chart states where its numbers come from.</p></div>
 <div class="findings three">
-<a class="finding" href="dashboards/mjo.html" style="text-decoration:none;color:inherit"><p class="eyebrow">Study 2</p><p class="figure-num" style="font-size:1.35rem">MJO forecast skill</p><p>Skill by lead time and correction method, the history test, seasonality, and a browser for 2,080 FuXi-S2S ensemble forecasts from 2002–2021.</p></a>
+<a class="finding" href="dashboards/mjo.html" style="text-decoration:none;color:inherit"><p class="eyebrow">Study 2</p><p class="figure-num" style="font-size:1.35rem">MJO forecast skill</p><p>Compare bias-correction methods on FuXi-S2S forecasts at different lead times, initialization dates, and MJO strengths. Browse 2,080 FuXi-S2S ensemble MJO forecasts (2002–2021) against observations, with bias-corrected forecasts for 2019–2021.</p></a>
 <a class="finding" href="dashboards/precipitation.html" style="text-decoration:none;color:inherit"><p class="eyebrow">Study 1</p><p class="figure-num" style="font-size:1.35rem">Precipitation baselines</p><p>Compare a 30-year normal with a recent window, track moving 20-year statistics, and see regional and seasonal losses.</p></a>
 <a class="finding" href="dashboards/chill.html" style="text-decoration:none;color:inherit"><p class="eyebrow">Study 3</p><p class="figure-num" style="font-size:1.35rem">Orchard chill risk</p><p>Chill portions against crop thresholds, the effect of variability versus the mean trend, and forecast accuracy by lead time.</p></a>
 </div>
