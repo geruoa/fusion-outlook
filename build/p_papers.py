@@ -147,6 +147,10 @@ def mjo():
 {fig("mjo-fig7.webp", "<b>Figure 7.</b> 42-day composite trajectories in RMM phase space: FuXi-S2S ensemble mean (blue) and observations (dashed), computed over 2002–2017. Unlike physics-based models, FuXi-S2S shows no notable bias at short leads. Large circles mark a 1-day lead; smaller circles follow in 5-day increments.", "Virji et al. 2026, Fig. 7, " + CC, d)}
 {fig("mjo-fig8.webp", "<b>Figure 8.</b> MJO forecast skill by initialization month, computed over 2002–2017. Forecasts started in May and September–February stay above 0.5 correlation beyond 40 days; March and June–August starts are shortest, as low as 35 days.", "Virji et al. 2026, Fig. 8, " + CC, d)}
 </div>
+<div class="fig-grid split">
+{fig("mjo-case-20170201.webp", "<b>Case study (project briefing, not in the paper).</b> Forecast from 1 February 2017, two weeks before the peak of a strong MJO event. The FuXi-S2S forecast (blue) captures the event's strength and ending; ECMWF (red) underestimates it and ends it early. Observed trajectory dashed.", "Project briefing, Oct 2025", d)}
+{fig("mjo-case-precip2017.webp", "<b>Case study (project briefing, not in the paper).</b> MJO amplitude and daily California precipitation, December 2016 – March 2017. The strongest MJO activity coincides with the sustained heavy precipitation of mid-February 2017.", "Project briefing, Oct 2025", d)}
+</div>
 </div></section>
 
 <section><div class="wrap two-col">
@@ -173,7 +177,7 @@ def mjo():
 </div></section>
 <section><div class="wrap">{pager(("papers/precipitation-shift.html", "California's precipitation shift", "Study 1"), ("papers/chill-risk.html", "Chill insufficiency in specialty crops", "Study 3"), d)}</div></section>
 """
-    return page("MJO Prediction with AI", "Study 2: AI-based MJO prediction reaches 40 skillful days; long history does not help, and bias correction helps only after week 3.", "p2", d, body)
+    return page("MJO Prediction Study", "Study 2: AI-based MJO prediction reaches 40 skillful days; long history does not help, and bias correction helps only after week 3.", "p2", d, body)
 
 
 # ---------------------------------------------------------------- Study 3
