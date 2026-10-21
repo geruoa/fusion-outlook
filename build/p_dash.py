@@ -96,7 +96,7 @@ def mjo():
 </section>
 
 <div class="provenance"><b>Data and method</b>
-<span>All plots are computed from the forecast and observed RMM indices in the study's repository, <a href="https://github.com/khalilv/mjo-predict">github.com/khalilv/mjo-predict</a> (<code>scripts/export_dashboard.py</code>), except the history panel, which is read from Figs. 1 and 6 of the paper. The test period covers 312 initializations from 2019 to 2021.</span></div>
+<span>All plots are computed from the forecast and observed RMM indices in the study's repository (<a href="https://github.com/khalilv/mjo-predict">github.com/khalilv/mjo-predict</a>), except the history panel, which is read from Figs. 1 and 6 of the paper. The test period covers 312 initializations from 2019 to 2021.</span></div>
 </div>
 """
     return page("MJO Forecast Skill", "Interactive MJO forecast skill dashboard: correction methods, history test, seasonality and a browser for 2,080 FuXi-S2S ensemble forecasts.", "dash", 1, body, scripts=scripts("mjo"))
