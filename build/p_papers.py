@@ -148,8 +148,8 @@ def mjo():
 {fig("mjo-fig8.webp", "<b>Figure 8.</b> MJO forecast skill by initialization month, computed over 2002–2017. Forecasts started in May and September–February stay above 0.5 correlation beyond 40 days; March and June–August starts are shortest, as low as 35 days.", "Virji et al. 2026, Fig. 8, " + CC, d)}
 </div>
 <div class="fig-grid split">
-{fig("mjo-case-20170201.webp", "<b>Case study (project briefing, not in the paper).</b> Forecast from 1 February 2017, two weeks before the peak of a strong MJO event. The FuXi-S2S forecast (blue) captures the event's strength and ending; ECMWF (red) underestimates it and ends it early. Observed trajectory dashed.", "Project briefing, Oct 2025", d)}
-{fig("mjo-case-precip2017.webp", "<b>Case study (project briefing, not in the paper).</b> MJO amplitude and daily California precipitation, December 2016 – March 2017. The strongest MJO activity coincides with the sustained heavy precipitation of mid-February 2017.", "Project briefing, Oct 2025", d)}
+{fig("mjo-case-20170201.webp", "<b>Case study (not in the paper).</b> MJO forecast from February 1, 2017, two weeks before the peak of a strong MJO event. The FuXi-S2S ensemble mean forecast (blue) captures the event's strength and ending; ECMWF (red) underestimates it and ends it early. The observed trajectory is shown as a dashed line.", "Project briefing, Oct 2025", d)}
+{fig("mjo-case-precip2017.webp", "<b>Case study (not in the paper).</b> MJO amplitude and daily California precipitation, December 2016 – March 2017. The strongest MJO activity coincides with the sustained heavy precipitation in mid-February 2017.", "Project briefing, Oct 2025", d)}
 </div>
 </div></section>
 
